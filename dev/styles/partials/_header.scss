@@ -1,0 +1,24 @@
+// Main Header START 
+.main-header {
+  background: $backgroundColor;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  &-image {
+    // float: left;
+    height: 100px;
+    width: 100px;
+    border-radius: 2%;
+  }
+  &-title {
+    width: 100%;
+  }
+}
+
+// Main Header END
+// Main Header END 
+@media (max-width: 905px) {
+  .main-header {
+  }
+}
