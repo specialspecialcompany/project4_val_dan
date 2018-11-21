@@ -138,6 +138,6 @@ map.init = () => {
 }
 
 $(function () {
-    maps.init();
+    map.init();
     zomatoAPI.getResults();
 });
