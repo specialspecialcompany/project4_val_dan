@@ -14,7 +14,7 @@
   <body>
     <header>
       <div class="wrapper">
-        <h1></h1>
+        <h1 class="title">TITLE</h1>
         <form class="search-bar">
           <div class="search-bar-top">
             <label class="visuallyhidden" for="search"
@@ -52,8 +52,37 @@
             />
             <label for="cycling">Driving</label>
           </div>
+          <div class="search-bar-slider">
+            <input
+              type="range"
+              min="1"
+              max="60"
+              value="30"
+              class="slider"
+              id="break-time"
+            />
+          </div>
         </form>
       </div>
     </header>
+    <main>
+      <section class="map">
+        <div class="map-scroll">
+          <div class="map-scroll-tile">Tile-1</div>
+          <div class="map-scroll-tile">Tile-2</div>
+          <div class="map-scroll-tile">Tile-3</div>
+          <div class="map-scroll-tile">Tile-4</div>
+          <div class="map-scroll-tile">Tile-5</div>
+          <div class="map-scroll-tile">Tile-6</div>
+          <div class="map-scroll-tile">Tile-7</div>
+          <div class="map-scroll-tile">Tile-8</div>
+          <div class="map-scroll-tile">Tile-9</div>
+          <div class="map-scroll-tile">Tile-10</div>
+        </div>
+        <div class="map-element"></div>
+      </section>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="dev/js/app.js"></script>
   </body>
 </html>

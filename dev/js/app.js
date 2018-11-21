@@ -60,6 +60,7 @@ zomatoAPI.getResults = () => {
       }
    }).then(res => {
       zomatoAPI.results = res;
+      console.log(zomatoAPI.results)
    });
 };
 
