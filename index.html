@@ -1,15 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-
-<body>
-
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,600"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dev/styles/main.css" />
+    <title>Project 4</title>
+  </head>
+  <body>
+    <header>
+      <div class="wrapper">
+        <h1></h1>
+        <form class="search-bar">
+          <div class="search-bar-top">
+            <label class="visuallyhidden" for="search"
+              >Restaurant search:</label
+            >
+            <input
+              id="search"
+              type="text"
+              placeholder="Type of food e.g. Pizza"
+            />
+            <label class="visuallyhidden" for="location">Your location:</label>
+            <input id="location" type="text" placeholder="HackerYou" />
+            <button class="btn" type="submit">Search</button>
+          </div>
+          <div class="search-bar-bottom">
+            <input
+              type="radio"
+              name="transp-mode"
+              value="walking"
+              id="walking"
+            />
+            <label for="walking">Walking</label>
+            <input
+              type="radio"
+              name="transp-mode"
+              value="cycling"
+              id="cycling"
+            />
+            <label for="cycling">Walking</label>
+            <input
+              type="radio"
+              name="transp-mode"
+              value="Driving"
+              id="Driving"
+            />
+            <label for="cycling">Driving</label>
+          </div>
+        </form>
+      </div>
+    </header>
+  </body>
 </html>

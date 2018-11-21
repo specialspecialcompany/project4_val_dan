@@ -1,0 +1,24 @@
+header {
+  background-color: #143bcf;
+  height: 100vh;
+  input {
+    margin: 0;
+    padding: 0;
+    border: none;
+    flex: 1 0 auto;
+  }
+}
+
+.search-bar {
+  display: flex;
+  direction: column;
+}
+
+.btn {
+  background-color: #221f1f;
+  border: none;
+}
+
+.search-bar {
+  display: flex;
+}
