@@ -24,6 +24,14 @@ map.displayMap = function () {
         center: { lat: 43.6482644, lng: -79.4000474 },
         zoom: 17
     });
+    map.hyMarker = new google.maps.Marker({
+        position: { lat: 43.6482644, lng: -79.4000474 },
+        map: map.googleMap,
+        // animation: google.maps.Animation.BOUNCE,
+        animation: google.maps.Animation,
+        title: 'Hacker You!',
+
+    });
     map.placeMarker();
 }
 
@@ -35,29 +43,24 @@ map.placeMarker = () => {
         ['Loblaws', 43.648264, -79.400047, 17],
     ];
 
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 17,
-        center: new google.maps.LatLng(43.6482644, -79.4000474),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
 
     // var infowindow = new google.maps.InfoWindow();
 
-    var marker, i;
+    // let marker, i;
 
-    for (i = 0; i < locations.length; i++) {
-        marker = new google.maps.Marker({
-            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-            map: map
-        });
+    // for (i = 0; i < locations.length; i++) {
+    //     map.marker = new google.maps.Marker({
+    //         position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+    //         map: map
+    //     });
 
-        google.maps.event.addListener(marker, 'click', (function (marker, i) {
-            return function () {
-                infowindow.setContent(locations[i][0]);
-                infowindow.open(map, marker);
-            }
-        })(marker, i));
-    }
+    //     google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    //         return function () {
+    //             infowindow.setContent(locations[i][0]);
+    //             infowindow.open(map, marker);
+    //         }
+    //     })(marker, i));
+    // }
 }
 
 // Start app
