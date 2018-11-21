@@ -321,8 +321,8 @@ header {
       border-bottom: 1px solid grey; }
       .map-scroll-tile:hover {
         background-color: #575757; }
-  .map-element {
-    width: 80%;
-    background: url("../assets/test.jpg");
-    background-position: center;
-    background-size: cover; }
+  .map-container {
+    width: 80%; }
+
+#map {
+  height: 100%; }

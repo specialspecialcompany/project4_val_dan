@@ -1,4 +1,3 @@
 node_modules/*
-public/assets/*
 *.config
 .DS_Store

@@ -1,0 +1,26 @@
+- Abillity to segment data across multiple "classrooms"
+- Title "Active Questions"
+- Name of classroom below title
+- Central ask question box with option to enable/disable notifications
+- Questions listed below in oldest question first order
+- Each question shows avatar, time it was created, name of user, and question.
+- Each div has three buttons "me too, being helped"
+- Need to add locaiton options to each question
+- Review completed questions
+
+- Ability to "age" completed questions and remove them after period of time
+
+
+Libraries:
+
+MomentJS
+FirebaseJS
+Jquery
+Google Indoor Maps? 
+
+Edit profile
+- Use 
+
+
+
+

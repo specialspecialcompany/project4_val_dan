@@ -16,10 +16,11 @@
       }
     }
   }
-  &-element {
+  &-container {
     width: 80%;
-    background: url("../assets/test.jpg");
-    background-position: center;
-    background-size: cover;
   }
+}
+
+#map {
+  height: 100%;
 }
