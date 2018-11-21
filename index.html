@@ -17,6 +17,7 @@
 
         .map-container {
             height: 100vh;
+            width: 100vw;
         }
 
         /* Optional: Makes the sample page fill the window. */
@@ -38,60 +39,29 @@
 
     </div>
     <script>
-        const map = {};
-        map.apikey = 'AIzaSyB2lrosib9DI0VJeY4MdCLmltwrg8Q6iJs'
-        map.googleMap = '';
-        map.hyMarker = '';
-        //
-        map.googleMap;
-        function initMap() {
-            map.googleMap = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 43.6482644, lng: -79.4000474 },
-                zoom: 17
-            });
-            var contentString = '<div id="content">' +
-                '<div id="siteNotice">' +
-                '</div>' +
-                '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
-                '<div id="bodyContent">' +
-                '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-                'sandstone rock formation in the southern part of the ' +
-                'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) ' +
-                'south west of the nearest large town, Alice Springs; 450&#160;km ' +
-                '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major ' +
-                'features of the Uluru - Kata Tjuta National Park. Uluru is ' +
-                'sacred to the Pitjantjatjara and Yankunytjatjara, the ' +
-                'Aboriginal people of the area. It has many springs, waterholes, ' +
-                'rock caves and ancient paintings. Uluru is listed as a World ' +
-                'Heritage Site.</p>' +
-                '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
-                'https://en.wikipedia.org/w/index.php?title=Uluru</a> ' +
-                '(last visited June 22, 2009).</p>' +
-                '</div>' +
-                '</div>';
 
+        // function initMap() {
+        //     map.googleMap = new google.maps.Map(document.getElementById('map'), {
+        //         center: { lat: 43.6482644, lng: -79.4000474 },
+        //         zoom: 17
+        //     });
+        //     map.hyMarker = new google.maps.Marker({
+        //         position: { lat: 43.6482644, lng: -79.4000474 },
+        //         map: map.googleMap,
+        //         // animation: google.maps.Animation.BOUNCE,
+        //         animation: google.maps.Animation,
+        //         title: 'Hacker You!',
 
-
-            var simpleMarker = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-            map.hyMarker = new google.maps.Marker({
-                position: { lat: 43.6482644, lng: -79.4000474 },
-                map: map.googleMap,
-                // animation: google.maps.Animation.BOUNCE,
-                animation: google.maps.Animation,
-                title: 'Hacker You!',
-
-            });
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-            marker.addListener('click', function () {
-                infowindow.open(map.googleMap, map.hyMarker);
-            });
-
-        }
+        //     });
+        // }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2lrosib9DI0VJeY4MdCLmltwrg8Q6iJs&callback=initMap"
-        async defer></script>
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs&callback=map.init" async
+        defer>
+        </script>
+    <script src='//code.jquery.com/jquery-3.3.1.min.js' integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8='
+        crossorigin='anonymous'></script>
+    <script src="./dev/js/app.js"></script>
+
 </body>
 
 </html>
