@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="dev/styles/main.css" />
     <title>Project 4</title>
   </head>
+
   <body>
     <header>
       <div class="wrapper">
@@ -82,78 +83,16 @@
         <div class="map-container"><div class="" id="map"></div></div>
       </section>
     </main>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2lrosib9DI0VJeY4MdCLmltwrg8Q6iJs&callback=initMap"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs&callback=map.init"
       async
       defer
     ></script>
-    <script src="dev/js/app.js"></script>
-  </body>
-</html>
-=======
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-        #map {
-            height: 100%;
-        }
-
-        .map-container {
-            height: 100vh;
-            width: 100vw;
-        }
-
-        /* Optional: Makes the sample page fill the window. */
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-</head>
-
-<body>
-    <section class="map-container">
-        <div id="map"></div>
-
-    </section>
-    <div class="map-container">
-
-    </div>
-    <script>
-
-        // function initMap() {
-        //     map.googleMap = new google.maps.Map(document.getElementById('map'), {
-        //         center: { lat: 43.6482644, lng: -79.4000474 },
-        //         zoom: 17
-        //     });
-        //     map.hyMarker = new google.maps.Marker({
-        //         position: { lat: 43.6482644, lng: -79.4000474 },
-        //         map: map.googleMap,
-        //         // animation: google.maps.Animation.BOUNCE,
-        //         animation: google.maps.Animation,
-        //         title: 'Hacker You!',
-
-        //     });
-        // }
-    </script>
-    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs&callback=map.init" async
-        defer>
-        </script>
-    <script src='//code.jquery.com/jquery-3.3.1.min.js' integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8='
-        crossorigin='anonymous'></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
     <script src="./dev/js/app.js"></script>
-
-</body>
-
+  </body>
 </html>

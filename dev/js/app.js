@@ -18,19 +18,19 @@ zomatoAPI.numberOfResults = 50;
 
 //Method to change number of results to display
 zomatoAPI.changeNumberOfResults = newNumber => {
-   zomatoAPI.numberOfResults = newNumber;
+    zomatoAPI.numberOfResults = newNumber;
 };
 
 //User coordinates, defaults to HackerYou -
 zomatoAPI.userCoordinates = {
-   lat: 43.6482644,
-   lon: -79.3978587
+    lat: 43.6482644,
+    lon: -79.3978587
 };
 
 //Method to change user coordinates
 zomatoAPI.setCoordinates = (lat, lon) => {
-   zomatoAPI.userCoordinates.lat = lat;
-   zomatoAPI.userCoordinates.lat = lon;
+    zomatoAPI.userCoordinates.lat = lat;
+    zomatoAPI.userCoordinates.lat = lon;
 };
 
 //Search radius default value in Meters
@@ -38,31 +38,31 @@ zomatoAPI.radius = 1000;
 
 //Method to set search radius in Meters
 zomatoAPI.setRadius = radius => {
-   zomatoAPI.radius = radius;
+    zomatoAPI.radius = radius;
 };
 
 //GET results from Zomato API
 zomatoAPI.getResults = () => {
-   $.ajax({
-      method: "GET",
-      crossDomain: true,
-      url: zomatoAPI.url,
-      dataType: "json",
-      async: true,
-      data: {
-      q: zomatoAPI.userKeywords,
-      lat: zomatoAPI.userCoordinates.lat,
-      lon: zomatoAPI.userCoordinates.lon,
-      radius: zomatoAPI.radius,
-      sort: "real_distance"
-      },
-      headers: {
-      "user-key": zomatoAPI.key
-      }
-   }).then(res => {
-      zomatoAPI.results = res;
-      console.log(zomatoAPI.results)
-   });
+    $.ajax({
+        method: "GET",
+        crossDomain: true,
+        url: zomatoAPI.url,
+        dataType: "json",
+        async: true,
+        data: {
+            q: zomatoAPI.userKeywords,
+            lat: zomatoAPI.userCoordinates.lat,
+            lon: zomatoAPI.userCoordinates.lon,
+            radius: zomatoAPI.radius,
+            sort: "real_distance"
+        },
+        headers: {
+            "user-key": zomatoAPI.key
+        }
+    }).then(res => {
+        zomatoAPI.results = res;
+        console.log(zomatoAPI.results)
+    });
 };
 
 //MAP OBJECT
@@ -138,6 +138,6 @@ map.init = () => {
 }
 
 $(function () {
-    maps.init();
+    map.init();
     zomatoAPI.getResults();
 });
