@@ -10,8 +10,10 @@ zomatoAPI.key = "6bff49b5a9a15a9b920996759741d5b1";
 zomatoAPI.results = [];
 
 //User keywords
-zomatoAPI.userKeywords = "coffee";
+zomatoAPI.userKeywords = "";
 
+//User location
+zomatoAPI.location = "";
 
 //Method to change number of results to display
 zomatoAPI.changeNumberOfResults = newNumber => {
@@ -31,11 +33,15 @@ zomatoAPI.setCoordinates = (lat, lon) => {
 };
 
 //Search radius default value in Meters
-zomatoAPI.radius = 10.00;
+zomatoAPI.radius = 10;
 
-//Method to set search radius in Meters
-zomatoAPI.setRadius = radius => {
-  zomatoAPI.radius = radius;
+// Method to set search radius in Meters - Moved to zomatoAPI.eventListeners
+zomatoAPI.setRadius = (walkSpeed, breakTime) => {
+  // Calculate this based on total break time multiply by walking speed.
+  // const walkSpeed = walkSpeed;
+  // const breakTime = breakTime;
+  zomatoAPI.radius = walkSpeed * breakTime;
+  console.log(zomatoAPI.radius);
 };
 
 //GET results from Zomato API
@@ -55,36 +61,71 @@ zomatoAPI.getResults = () => {
     },
     headers: {
       "user-key": zomatoAPI.key
-      }
-   }).then(res => {
-      zomatoAPI.results = res.restaurants;
-      console.log(zomatoAPI.results)
-   });
+    }
+  }).then(res => {
+    zomatoAPI.results = res.restaurants;
+  });
+  // FROM DAN: This code should be refactored as it waits to the data to be returned before running normalizeResults function
+  setTimeout(function() {
+    zomatoAPI.normalizeResults();
+  }, 2000);
 };
 
 zomatoAPI.normalizeResults = () => {
-   let flatArr = zomatoAPI.results;
-   let normalizedArr = [];
-   flatArr = flatArr.map(item => item.restaurant).forEach(item => normalizedArr.push([item.name, item.location.latitude, item.location.longitude, item.location.address, item.cuisines, item.price_range, item.thumb, item.featured_image, item.url]));
-   console.log(normalizedArr);
+  let flatArr = zomatoAPI.results;
+  let normalizedArr = [];
+  flatArr = flatArr
+    .map(item => item.restaurant)
+    .forEach(item =>
+      normalizedArr.push([
+        item.name,
+        item.location.latitude,
+        item.location.longitude,
+        item.location.address,
+        item.cuisines,
+        item.price_range,
+        item.thumb,
+        item.featured_image,
+        item.url
+      ])
+    );
+  // console.log(normalizedArr);
+  maps.receiveMarkerData(normalizedArr);
 };
 
+zomatoAPI.eventListeners = () => {
+  $("button[type=submit]").on("click", function(event) {
+    event.preventDefault();
+    zomatoAPI.userKeywords = $("#search").val();
+    const breakTime = $("#break-time").val();
+    const walkSpeed = $("input[type=radio]:checked").val();
+    console.log(breakTime, walkSpeed);
+    zomatoAPI.setRadius(breakTime, walkSpeed);
+    // console.log(zomatoAPI.userKeywords);
+    // Call our API and get results based on input provided by user
+    zomatoAPI.getResults();
+  });
+};
+
+zomatoAPI.init = () => {
+  zomatoAPI.eventListeners();
+};
 //MAP OBJECT
 
 // Create app namespace to hold all methods
 const map = {
-    apikey: 'AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs',
-    // markermarkers: [
-    //     ['HackerYou', 43.6482644, -79.4000474, 17],
-    //     ['Fresh on Spadina', 43.648264, -79.400047, 17],
-    //     ['Dollarama', 43.648264, -79.400047, 17],
-    //     ['Loblaws', 43.648264, -79.400047, 17],
-    // ],
-}
+  apikey: "AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs"
+  // markermarkers: [
+  //     ['HackerYou', 43.6482644, -79.4000474, 17],
+  //     ['Fresh on Spadina', 43.648264, -79.400047, 17],
+  //     ['Dollarama', 43.648264, -79.400047, 17],
+  //     ['Loblaws', 43.648264, -79.400047, 17],
+  // ],
+};
 // Collect user input
 map.getMapData = (...array) => {
-    map.mapData.push([])
-}
+  map.mapData.push([]);
+};
 
 // // Make AJAX request with user inputted data
 // map.getInfo = function () {
@@ -92,17 +133,17 @@ map.getMapData = (...array) => {
 // }
 
 // Display data on the page
-map.displayMap = function () {
-    map.googleMap = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 43.6482644, lng: -79.4000474 },
-        zoom: 17
-    });
-    map.hyMarker = new google.maps.Marker({
-        position: { lat: 43.6482644, lng: -79.4000474 },
-        map: map.googleMap,
-        // animation: google.maps.Animation.BOUNCE,
-        animation: google.maps.Animation,
-        title: 'Hacker You!',
+map.displayMap = function() {
+  map.googleMap = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 43.6482644, lng: -79.4000474 },
+    zoom: 17
+  });
+  map.hyMarker = new google.maps.Marker({
+    position: { lat: 43.6482644, lng: -79.4000474 },
+    map: map.googleMap,
+    // animation: google.maps.Animation.BOUNCE,
+    animation: google.maps.Animation,
+    title: "Hacker You!"
   }).then(res => {
     zomatoAPI.results = res;
     console.log(zomatoAPI.results);
@@ -135,11 +176,11 @@ firedb.setupAuth = () => {
 const maps = {};
 // Static locations for markers on map
 maps.locations = [
-  ["HackerYou", 43.6482644, -79.4000474],
-  ["HackerYou", 43.6482644, -79.4000474],
-  ["Fresh on Spadina", 43.648264, -79.395689],
-  ["Dollarama", 43.648264, -79.398544],
-  ["Loblaws", 43.648264, -79.400516]
+  // ["HackerYou", 43.6482644, -79.4000474],
+  // ["HackerYou", 43.6482644, -79.4000474],
+  // ["Fresh on Spadina", 43.648264, -79.395689],
+  // ["Dollarama", 43.648264, -79.398544],
+  // ["Loblaws", 43.648264, -79.400516]
 ];
 maps.startLocation = {
   lat: 43.6482644,
@@ -157,8 +198,10 @@ maps.startLocation = {
 // });
 // Get data from ZOmato API and push into locations array
 
-maps.getMapData = (...array) => {
-  map.locations.push([]);
+maps.receiveMarkerData = (...array) => {
+  maps.locations.push(...array);
+  console.log(maps.locations);
+  maps.setMarkers(map);
 };
 
 // Display Google Map on screen, run a forEach method against each location in the Locations array
@@ -167,7 +210,6 @@ maps.displayMap = function() {
     center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
     zoom: 15
   });
-  maps.setMarkers(map);
 };
 
 //Create markers on Google Maps based on the Locations
@@ -180,7 +222,6 @@ maps.setMarkers = map => {
       title: location[0]
     });
     // Add add click listener for each marker added to map
-
     maps.eventListener(map, marker);
   }
   maps.drawRadiusMarker(map);
@@ -225,6 +266,7 @@ maps.init = () => {
 
 $(function() {
   maps.init();
-  zomatoAPI.getResults();
-  firedb.init();
+  // zomatoAPI.getResults();
+  zomatoAPI.init();
+  // firedb.init();
 });

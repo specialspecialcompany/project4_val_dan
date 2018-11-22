@@ -27,38 +27,64 @@
               placeholder="Type of food e.g. Pizza"
             />
             <label class="visuallyhidden" for="location">Your location:</label>
-            <input id="location" type="text" placeholder="HackerYou" />
-            <button class="btn" type="submit">Search</button>
+            <input id="location" type="text" placeholder="HackerYou" required />
+            <button class="btn" type="submit" required>Search</button>
           </div>
           <div class="search-bar-bottom">
+            <!--
+              <input
+                type="radio"
+                name="transp-mode"
+                value="walking"
+                id="walking"
+              />
+              <label for="walking">Walking</label>
+              <input
+                type="radio"
+                name="transp-mode"
+                value="cycling"
+                id="cycling"
+              />
+              <label for="cycling">Walking</label>
+              <input
+                type="radio"
+                name="transp-mode"
+                value="Driving"
+                id="Driving"
+              />
+            -->
+            <label for="slow-walk">Slow Walk</label>
             <input
               type="radio"
-              name="transp-mode"
-              value="walking"
-              id="walking"
+              name="walking-speed"
+              value="3"
+              id="slow-walk"
+              required
             />
-            <label for="walking">Walking</label>
+            <label for="normal-walk">Normal Walk</label>
             <input
               type="radio"
-              name="transp-mode"
-              value="cycling"
-              id="cycling"
+              name="walking-speed"
+              value="5"
+              id="normal-walk"
+              required
             />
-            <label for="cycling">Walking</label>
+            <label for="fast-walk">Fast Walk</label>
             <input
               type="radio"
-              name="transp-mode"
-              value="Driving"
-              id="Driving"
+              name="walking-speed"
+              value="7"
+              id="fast-walk"
+              required
             />
-            <label for="cycling">Driving</label>
           </div>
           <div class="search-bar-slider">
             <input
               type="range"
-              min="1"
+              min="10"
               max="60"
               value="30"
+              step="5"
               class="slider"
               id="break-time"
             />
@@ -127,6 +153,7 @@
         </div>
       </section>
     </main>
+
     <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs&callback=maps.init"
