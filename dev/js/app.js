@@ -11,10 +11,8 @@ zomatoAPI.key = "6bff49b5a9a15a9b920996759741d5b1";
 zomatoAPI.results = [];
 
 //User keywords
-zomatoAPI.userKeywords = "";
+zomatoAPI.userKeywords = "coffee";
 
-//Number of results to display, 50 by default
-zomatoAPI.numberOfResults = 50;
 
 //Method to change number of results to display
 zomatoAPI.changeNumberOfResults = newNumber => {
@@ -34,7 +32,7 @@ zomatoAPI.setCoordinates = (lat, lon) => {
 };
 
 //Search radius default value in Meters
-zomatoAPI.radius = 1000;
+zomatoAPI.radius = 10.00;
 
 //Method to set search radius in Meters
 zomatoAPI.setRadius = radius => {
@@ -60,9 +58,16 @@ zomatoAPI.getResults = () => {
       "user-key": zomatoAPI.key
       }
    }).then(res => {
-      zomatoAPI.results = res;
+      zomatoAPI.results = res.restaurants;
       console.log(zomatoAPI.results)
    });
+};
+
+zomatoAPI.normalizeResults = () => {
+   let flatArr = zomatoAPI.results;
+   let normalizedArr = [];
+   flatArr = flatArr.map(item => item.restaurant).forEach(item => normalizedArr.push([item.name, item.location.latitude, item.location.longitude, item.location.address, item.cuisines, item.price_range, item.thumb, item.featured_image, item.url]));
+   console.log(normalizedArr);
 };
 
 //MAP OBJECT
@@ -134,7 +139,9 @@ map.placeMarker = () => {
 
 // Start app
 map.init = () => {
-    map.displayMap();
+    setTimeout(function() {
+       map.displayMap()
+      }, 500);
 }
 
 $(function () {
