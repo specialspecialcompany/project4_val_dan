@@ -10,10 +10,8 @@ zomatoAPI.key = "6bff49b5a9a15a9b920996759741d5b1";
 zomatoAPI.results = [];
 
 //User keywords
-zomatoAPI.userKeywords = "";
+zomatoAPI.userKeywords = "coffee";
 
-//Number of results to display, 50 by default
-zomatoAPI.numberOfResults = 50;
 
 //Method to change number of results to display
 zomatoAPI.changeNumberOfResults = newNumber => {
@@ -33,7 +31,7 @@ zomatoAPI.setCoordinates = (lat, lon) => {
 };
 
 //Search radius default value in Meters
-zomatoAPI.radius = 1000;
+zomatoAPI.radius = 10.00;
 
 //Method to set search radius in Meters
 zomatoAPI.setRadius = radius => {
@@ -57,7 +55,54 @@ zomatoAPI.getResults = () => {
     },
     headers: {
       "user-key": zomatoAPI.key
-    }
+      }
+   }).then(res => {
+      zomatoAPI.results = res.restaurants;
+      console.log(zomatoAPI.results)
+   });
+};
+
+zomatoAPI.normalizeResults = () => {
+   let flatArr = zomatoAPI.results;
+   let normalizedArr = [];
+   flatArr = flatArr.map(item => item.restaurant).forEach(item => normalizedArr.push([item.name, item.location.latitude, item.location.longitude, item.location.address, item.cuisines, item.price_range, item.thumb, item.featured_image, item.url]));
+   console.log(normalizedArr);
+};
+
+//MAP OBJECT
+
+// Create app namespace to hold all methods
+const map = {
+    apikey: 'AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs',
+    // markermarkers: [
+    //     ['HackerYou', 43.6482644, -79.4000474, 17],
+    //     ['Fresh on Spadina', 43.648264, -79.400047, 17],
+    //     ['Dollarama', 43.648264, -79.400047, 17],
+    //     ['Loblaws', 43.648264, -79.400047, 17],
+    // ],
+}
+// Collect user input
+map.getMapData = (...array) => {
+    map.mapData.push([])
+}
+
+// // Make AJAX request with user inputted data
+// map.getInfo = function () {
+
+// }
+
+// Display data on the page
+map.displayMap = function () {
+    map.googleMap = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 43.6482644, lng: -79.4000474 },
+        zoom: 17
+    });
+    map.hyMarker = new google.maps.Marker({
+        position: { lat: 43.6482644, lng: -79.4000474 },
+        map: map.googleMap,
+        // animation: google.maps.Animation.BOUNCE,
+        animation: google.maps.Animation,
+        title: 'Hacker You!',
   }).then(res => {
     zomatoAPI.results = res;
     console.log(zomatoAPI.results);
