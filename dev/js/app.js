@@ -10,8 +10,10 @@ zomatoAPI.key = "6bff49b5a9a15a9b920996759741d5b1";
 zomatoAPI.results = [];
 
 //User keywords
-zomatoAPI.userKeywords = "coffee";
+zomatoAPI.userKeywords = "";
 
+//User location
+zomatoAPI.location = "";
 
 //Method to change number of results to display
 zomatoAPI.changeNumberOfResults = newNumber => {
@@ -31,11 +33,20 @@ zomatoAPI.setCoordinates = (lat, lon) => {
 };
 
 //Search radius default value in Meters
-zomatoAPI.radius = 10.00;
+zomatoAPI.radius = 10;
 
-//Method to set search radius in Meters
-zomatoAPI.setRadius = radius => {
-  zomatoAPI.radius = radius;
+// Set up a init function so we can add additional functions in the future.
+zomatoAPI.init = () => {
+  zomatoAPI.eventListeners();
+};
+
+// Method to set search radius in Meters - Moved to zomatoAPI.eventListeners
+zomatoAPI.setRadius = (walkSpeed = 5, breakTime = 60) => {
+  // Calculate this based on total break time multiply by walking speed.
+  // const walkSpeed = walkSpeed;
+  // const breakTime = breakTime;
+  zomatoAPI.radius = walkSpeed * breakTime;
+  console.log(zomatoAPI.radius);
 };
 
 //GET results from Zomato API
@@ -45,7 +56,7 @@ zomatoAPI.getResults = () => {
     crossDomain: true,
     url: zomatoAPI.url,
     dataType: "json",
-    async: true,
+    // async: true,
     data: {
       q: zomatoAPI.userKeywords,
       lat: zomatoAPI.userCoordinates.lat,
@@ -55,57 +66,49 @@ zomatoAPI.getResults = () => {
     },
     headers: {
       "user-key": zomatoAPI.key
-      }
-   }).then(res => {
-      zomatoAPI.results = res.restaurants;
-      console.log(zomatoAPI.results)
-   });
+    }
+  }).then(res => {
+    zomatoAPI.results = res.restaurants;
+  });
+  // FROM DAN: This code should be refactored as it waits to the data to be returned before running normalizeResults function
+  setTimeout(function() {
+    zomatoAPI.normalizeResults();
+  }, 2000);
 };
 
 zomatoAPI.normalizeResults = () => {
-   let flatArr = zomatoAPI.results;
-   let normalizedArr = [];
-   flatArr = flatArr.map(item => item.restaurant).forEach(item => normalizedArr.push([item.name, item.location.latitude, item.location.longitude, item.location.address, item.cuisines, item.price_range, item.thumb, item.featured_image, item.url]));
-   console.log(normalizedArr);
+  let flatArr = zomatoAPI.results;
+  let normalizedArr = [];
+  flatArr = flatArr
+    .map(item => item.restaurant)
+    .forEach(item =>
+      normalizedArr.push([
+        item.name,
+        item.location.latitude,
+        item.location.longitude,
+        item.location.address,
+        item.cuisines,
+        item.price_range,
+        item.thumb,
+        item.featured_image,
+        item.url
+      ])
+    );
+  // console.log(normalizedArr);
+  maps.receiveMarkerData(normalizedArr);
 };
 
-//MAP OBJECT
-
-// Create app namespace to hold all methods
-const map = {
-    apikey: 'AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs',
-    // markermarkers: [
-    //     ['HackerYou', 43.6482644, -79.4000474, 17],
-    //     ['Fresh on Spadina', 43.648264, -79.400047, 17],
-    //     ['Dollarama', 43.648264, -79.400047, 17],
-    //     ['Loblaws', 43.648264, -79.400047, 17],
-    // ],
-}
-// Collect user input
-map.getMapData = (...array) => {
-    map.mapData.push([])
-}
-
-// // Make AJAX request with user inputted data
-// map.getInfo = function () {
-
-// }
-
-// Display data on the page
-map.displayMap = function () {
-    map.googleMap = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 43.6482644, lng: -79.4000474 },
-        zoom: 17
-    });
-    map.hyMarker = new google.maps.Marker({
-        position: { lat: 43.6482644, lng: -79.4000474 },
-        map: map.googleMap,
-        // animation: google.maps.Animation.BOUNCE,
-        animation: google.maps.Animation,
-        title: 'Hacker You!',
-  }).then(res => {
-    zomatoAPI.results = res;
-    console.log(zomatoAPI.results);
+zomatoAPI.eventListeners = () => {
+  $("button[type=submit]").on("click", function(event) {
+    event.preventDefault();
+    zomatoAPI.userKeywords = $("#search").val();
+    const breakTime = $("#break-time").val();
+    const walkSpeed = $("input:checked").val();
+    console.log(breakTime, walkSpeed);
+    zomatoAPI.setRadius(breakTime, walkSpeed);
+    // console.log(zomatoAPI.userKeywords);
+    // Call our API and get results based on input provided by user
+    zomatoAPI.getResults();
   });
 };
 
@@ -133,32 +136,18 @@ firedb.setupAuth = () => {
 //MAP OBJECT
 // Create app namespace to hold all methods
 const maps = {};
-// Static locations for markers on map
-maps.locations = [
-  ["HackerYou", 43.6482644, -79.4000474],
-  ["HackerYou", 43.6482644, -79.4000474],
-  ["Fresh on Spadina", 43.648264, -79.395689],
-  ["Dollarama", 43.648264, -79.398544],
-  ["Loblaws", 43.648264, -79.400516]
-];
+// Static locations array for google markers
+maps.locations = [];
 maps.startLocation = {
   lat: 43.6482644,
   lng: -79.4000474
 };
-// var cityCircle = new google.maps.Circle({
-//   strokeColor: "#FF0000",
-//   strokeOpacity: 0.8,
-//   strokeWeight: 2,
-//   fillColor: "#FF0000",
-//   fillOpacity: 0.35,
-//   map: map,
-//   center: citymap[city].center,
-//   radius: Math.sqrt(citymap[city].population) * 100
-// });
-// Get data from ZOmato API and push into locations array
 
-maps.getMapData = (...array) => {
-  map.locations.push([]);
+// Get data from Zomato API and push into locations array
+maps.receiveMarkerData = (...array) => {
+  maps.locations.push(...array);
+  console.log(maps.locations);
+  maps.displayMap();
 };
 
 // Display Google Map on screen, run a forEach method against each location in the Locations array
@@ -167,22 +156,12 @@ maps.displayMap = function() {
     center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
     zoom: 15
   });
-  maps.setMarkers(map);
-};
-
-//Create markers on Google Maps based on the Locations
-maps.setMarkers = map => {
-  for (let i = 0; i < maps.locations.length; i++) {
-    const location = maps.locations[i];
-    const marker = new google.maps.Marker({
-      position: { lat: location[1], lng: location[2] },
-      map: map,
-      title: location[0]
-    });
-    // Add add click listener for each marker added to map
-
-    maps.eventListener(map, marker);
-  }
+  map.hyMarker = new google.maps.Marker({
+    position: { lat: 43.6482644, lng: -79.4000474 },
+    map: map,
+    animation: google.maps.Animation.BOUNCE,
+    title: "Hacker You!"
+  });
   maps.drawRadiusMarker(map);
 };
 
@@ -197,6 +176,21 @@ maps.drawRadiusMarker = map => {
     center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
     radius: zomatoAPI.radius
   });
+  maps.setMarkers(map);
+};
+
+//Create markers on Google Maps based on the Locations
+maps.setMarkers = map => {
+  for (let i = 0; i < maps.locations.length; i++) {
+    const location = maps.locations[i];
+    const marker = new google.maps.Marker({
+      position: { lat: location[1], lng: location[2] },
+      map: map,
+      title: location[0]
+    });
+    // Add add click listener for each marker added to map
+    maps.eventListener(map, marker);
+  }
 };
 
 // map.markerContent = (title, subtype, description) => {
@@ -225,6 +219,7 @@ maps.init = () => {
 
 $(function() {
   maps.init();
-  zomatoAPI.getResults();
-  firedb.init();
+  // zomatoAPI.getResults();
+  zomatoAPI.init();
+  // firedb.init();
 });
