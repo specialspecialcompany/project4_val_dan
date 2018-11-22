@@ -64,6 +64,27 @@ zomatoAPI.getResults = () => {
   });
 };
 
+// FIREBASE OBJECT
+const firedb = {};
+
+// Initialize Firebase
+firedb.init = () => {
+  var config = {
+    apiKey: "AIzaSyB49cILyim9CYlPKeIp0Mzj7Jmz05QF_Wg",
+    authDomain: "testhyproject.firebaseapp.com",
+    databaseURL: "https://testhyproject.firebaseio.com",
+    projectId: "testhyproject",
+    storageBucket: "",
+    messagingSenderId: "717581892962"
+  };
+  firebase.initializeApp(config);
+};
+
+firedb.setupAuth = () => {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+};
+
 //MAP OBJECT
 // Create app namespace to hold all methods
 const maps = {};
@@ -160,4 +181,5 @@ maps.init = () => {
 $(function() {
   maps.init();
   zomatoAPI.getResults();
+  firedb.init();
 });
