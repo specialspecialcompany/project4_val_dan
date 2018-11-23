@@ -97,14 +97,12 @@ zomatoAPI.normalizeResults = () => {
 };
 
 zomatoAPI.eventListeners = () => {
-  $("button[type=submit]").on("click", function(event) {
-    event.preventDefault();
+  $("#submit-btn").on("click", function() {
     zomatoAPI.userKeywords = $("#search").val();
     const breakTime = $("#break-time").val();
     const walkSpeed = $("input:checked").val();
     console.log(breakTime, walkSpeed);
     zomatoAPI.setRadius(breakTime, walkSpeed);
-    // console.log(zomatoAPI.userKeywords);
     // Call our API and get results based on input provided by user
     zomatoAPI.getResults();
   });
