@@ -43,8 +43,6 @@ zomatoAPI.init = () => {
 // Method to set search radius in Meters - Moved to zomatoAPI.eventListeners
 zomatoAPI.setRadius = (walkSpeed = 5, breakTime = 60) => {
   // Calculate this based on total break time multiply by walking speed.
-  // const walkSpeed = walkSpeed;
-  // const breakTime = breakTime;
   zomatoAPI.radius = walkSpeed * breakTime;
   console.log(zomatoAPI.radius);
 };
@@ -94,7 +92,7 @@ zomatoAPI.normalizeResults = () => {
         item.url
       ])
     );
-  // console.log(normalizedArr);
+  console.log(normalizedArr);
   maps.receiveMarkerData(normalizedArr);
 };
 
@@ -144,14 +142,43 @@ maps.startLocation = {
 };
 
 // Get data from Zomato API and push into locations array
-maps.receiveMarkerData = (...array) => {
+maps.receiveMarkerData = array => {
   maps.locations.push(...array);
-  console.log(maps.locations);
-  maps.displayMap();
+
+  // console.log(maps.locations[0]);
+  // maps.displayMap();
+  maps.buildMap();
 };
 
+// maps.filterRecievedMarkerData = () => {
+//   for (let i = 0; i < maps.locations.length; i++) {
+//     const location = maps.locations[i];
+//     if (location[0] !== undefined) {
+//       console.log("bad res title");
+//     }
+//     if (location[1] !== undefined || location[2] !== undefined) {
+//       console.log("bad res title");
+//     }
+//   }
+// };
+
 // Display Google Map on screen, run a forEach method against each location in the Locations array
-maps.displayMap = function() {
+// maps.displayMap = function() {
+//   let map = new google.maps.Map(document.getElementById("map"), {
+//     center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
+//     zoom: 15
+//   });
+//   map.hyMarker = new google.maps.Marker({
+//     position: { lat: 43.6482644, lng: -79.4000474 },
+//     map: map,
+//     // animation: google.maps.Animation.BOUNCE,
+//     animation: google.maps.Animation,
+//     title: "Hacker You!"
+//   });
+//   maps.drawRadiusMarker(map);
+// };
+
+maps.buildMap = () => {
   let map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
     zoom: 15
@@ -159,10 +186,55 @@ maps.displayMap = function() {
   map.hyMarker = new google.maps.Marker({
     position: { lat: 43.6482644, lng: -79.4000474 },
     map: map,
-    animation: google.maps.Animation.BOUNCE,
+    // animation: google.maps.Animation.BOUNCE,
+    animation: google.maps.Animation,
     title: "Hacker You!"
   });
-  maps.drawRadiusMarker(map);
+  for (let i = 0; i < maps.locations.length; i++) {
+    let location = maps.locations[i];
+    let marker = new google.maps.Marker({
+      // position: { lat: parseInt(location[1]), lng: parseInt(location[2]) },
+      position: {
+        lat: location[1],
+        lng: location[2]
+      },
+      map: map,
+      title: "TEST"
+    });
+    marker.setMap(map);
+    // Add add click listener for each marker added to map
+    marker.addListener("click", function() {
+      infowindow.open(map, marker);
+    });
+    maps.eventListener(map, marker);
+  }
+  let infowindow = new google.maps.InfoWindow({
+    content: `<h1>hi!</h1>
+              <h2> I'm a sub-heading </h2>
+              <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum quis cupiditate corporis veritatis culpa nemo reiciendis numquam delectus quia aperiam, dolore beatae neque cum consequuntur maxime praesentium voluptatum dolor sed!</p>
+    `
+  });
+};
+
+//Create markers on Google Maps based on the Locations
+maps.setMarkers = map => {
+  // console.log(map);
+  for (let i = 0; i < maps.locations.length; i++) {
+    let location = maps.locations[i];
+    let marker = new google.maps.Marker({
+      // position: { lat: parseInt(location[1]), lng: parseInt(location[2]) },
+      position: {
+        lat: parseInt("43.6543916667"),
+        lng: parseInt("-79.4012000000")
+      },
+      map: map,
+      title: "TEST"
+    });
+    marker.setMap(map);
+    // Add add click listener for each marker added to map
+
+    maps.eventListener(map, marker);
+  }
 };
 
 maps.drawRadiusMarker = map => {
@@ -177,20 +249,6 @@ maps.drawRadiusMarker = map => {
     radius: zomatoAPI.radius
   });
   maps.setMarkers(map);
-};
-
-//Create markers on Google Maps based on the Locations
-maps.setMarkers = map => {
-  for (let i = 0; i < maps.locations.length; i++) {
-    const location = maps.locations[i];
-    const marker = new google.maps.Marker({
-      position: { lat: location[1], lng: location[2] },
-      map: map,
-      title: location[0]
-    });
-    // Add add click listener for each marker added to map
-    maps.eventListener(map, marker);
-  }
 };
 
 // map.markerContent = (title, subtype, description) => {
@@ -214,12 +272,11 @@ maps.eventListener = (map, marker) => {
 
 // Start app
 maps.init = () => {
-  maps.displayMap();
+  // maps.displayMap();
 };
 
 $(function() {
   maps.init();
-  // zomatoAPI.getResults();
   zomatoAPI.init();
   // firedb.init();
 });
