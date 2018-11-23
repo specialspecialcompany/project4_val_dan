@@ -5,26 +5,62 @@ header {
   align-items: center;
   input {
     margin: 0;
-    padding: 0;
+    padding: 10px;
     border: none;
-    flex: 1 0 auto;
+    &#search {
+      width: 400px;
+    }
+    &#location {
+      width: 200px;
+      border-left: 1px solid rgb(199, 199, 199);
+    }
   }
 }
 
 .title {
-  font-size: 4rem;
+  font-size: 8rem;
+  padding-bottom: 50px;
 }
 
 .search-bar {
   display: flex;
   flex-direction: column;
+  &-top {
+    display: flex;
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 30px;
+
+    input::placeholder {
+      font-size: 1.5rem;
+    }
+    input:focus {
+      border-bottom: 3px solid rgb(42, 137, 247);
+      outline-width: 0;
+    }
+  }
+  &-bottom {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    input {
+      margin: 0 40px 0 5px;
+    }
+    input:last-of-type {
+      margin: 0 0 0 5px;
+    }
+  }
+  &-slider {
+    margin: 0 auto;
+    width: 80%;
+  }
 }
 
 .btn {
   background-color: #221f1f;
   border: none;
-}
-
-.search-bar {
-  display: flex;
+  text-decoration: none;
+  padding: 10px;
+  display: inline-block;
+  color: white;
 }
