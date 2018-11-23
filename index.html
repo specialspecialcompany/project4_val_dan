@@ -15,7 +15,7 @@
   <body>
     <header>
       <div class="wrapper">
-        <h1 class="title">TITLE</h1>
+        <h1 class="title">Hoodfood</h1>
         <form class="search-bar">
           <div class="search-bar-top">
             <label class="visuallyhidden" for="search"
@@ -28,33 +28,17 @@
             />
             <label class="visuallyhidden" for="location">Your location:</label>
             <input id="location" type="text" placeholder="HackerYou" />
-            <button class="btn" type="submit" requied>Search</button>
+            <a href="#main-map" id="submit-btn" class="btn">Search</a>
           </div>
           <div class="search-bar-bottom">
-            <!--
-              <input
-                type="radio"
-                name="transp-mode"
-                value="walking"
-                id="walking"
-              />
-              <label for="walking">Walking</label>
-              <input
-                type="radio"
-                name="transp-mode"
-                value="cycling"
-                id="cycling"
-              />
-              <label for="cycling">Walking</label>
-              <input
-                type="radio"
-                name="transp-mode"
-                value="Driving"
-                id="Driving"
-              />
-            -->
             <label for="slow-walk">Slow Walk</label>
-            <input type="radio" name="walking-speed" value="3" id="slow-walk" />
+            <input
+              type="radio"
+              name="walking-speed"
+              value="3"
+              id="slow-walk"
+              checked="checked"
+            />
             <label for="normal-walk">Normal Walk</label>
             <input
               type="radio"
@@ -80,7 +64,7 @@
       </div>
     </header>
     <main>
-      <section class="map">
+      <section class="map" id="main-map">
         <div id="map-tiles" class="map-scroll">
           <div class="map-scroll-tile">Tile-1</div>
           <div class="map-scroll-tile">Tile-2</div>
