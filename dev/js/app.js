@@ -1,3 +1,46 @@
+// APP OBJECT
+
+const app = {};
+app.markerIndicator = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+// Method to generate map tiles
+
+app.generateMapTiles = (normalizedData) => {
+  $("#map-tiles").html("");
+  $("#main-tiles").html("");
+
+
+  normalizedData.forEach(element => {
+    $("#main-tiles").append(`
+    <div class="user-results-tile">
+            <div class="upper-tile">
+              <img src="${element[7]}" alt="" />
+            </div>
+            <div class="lower-tile">
+              <h2 class="lower-tile-title">${element[0]}</h2>
+              <p class="tile-description">
+                Cuisine: ${element[4]}
+              </p>
+              <a href="${element[8]}" class="tile-btn">See more</a>
+            </div>
+          </div>
+      `)
+
+    $("#map-tiles").append(`
+    <div class="map-scroll-tile">
+    <span class="map-scroll-tile-indicator">Indicator: ${app.markerIndicator[normalizedData.indexOf(element)]}</span>
+    <span class="map-scroll-tile-title">Title: ${element[0]}</span>
+    <span class="map-scroll-tile-cuisine">Cuisine: ${element[4]}</span>
+    <span class="map-scroll-tile-price">Price: ${element[5]}</span>
+  </div>`);
+
+  });
+}
+
+
+
+// ZOMATO OBJECT
+
 const zomatoAPI = {};
 
 // API url
@@ -94,17 +137,16 @@ zomatoAPI.normalizeResults = () => {
     );
   console.log(normalizedArr);
   maps.receiveMarkerData(normalizedArr);
+  app.generateMapTiles(normalizedArr);
 };
 
 zomatoAPI.eventListeners = () => {
-  $("button[type=submit]").on("click", function(event) {
-    event.preventDefault();
+  $("#submit-btn").on("click", function() {
     zomatoAPI.userKeywords = $("#search").val();
     const breakTime = $("#break-time").val();
     const walkSpeed = $("input:checked").val();
     console.log(breakTime, walkSpeed);
     zomatoAPI.setRadius(breakTime, walkSpeed);
-    // console.log(zomatoAPI.userKeywords);
     // Call our API and get results based on input provided by user
     zomatoAPI.getResults();
   });
