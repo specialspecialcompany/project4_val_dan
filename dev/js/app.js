@@ -195,8 +195,8 @@ maps.buildMap = () => {
     let marker = new google.maps.Marker({
       // position: { lat: parseInt(location[1]), lng: parseInt(location[2]) },
       position: {
-        lat: parseInt("43.6543916667"),
-        lng: parseInt("-79.4012000000")
+        lat: location[1],
+        lng: location[2]
       },
       map: map,
       title: "TEST"
