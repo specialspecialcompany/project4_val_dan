@@ -1,3 +1,7 @@
+const app = {};
+app.markerIndicator = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+console.log(app.markerIndicator);
+
 const zomatoAPI = {};
 
 // API url
@@ -169,17 +173,18 @@ maps.displayMap = () => {
 //Create markers on Google Maps based on the Locations
 maps.setMarkers = map => {
   console.log(map);
-  for (i = 0; i < maps.locations.length; i++) {
-    let location = maps.locations[i];
+  for (index = 0; index < maps.locations.length; index++) {
+    let location = maps.locations[index];
     let position = new google.maps.LatLng(location[1], location[2]);
     let marker = new google.maps.Marker({
       position: position,
       map: map,
+      label: app.markerIndicator[index],
       title: location[0]
     });
 
     // Add add click listener for each marker added to map
-    maps.eventListener(map, marker);
+    maps.eventListener(map, marker, index);
   }
   maps.drawRadiusMarker(map);
 };
@@ -197,19 +202,16 @@ maps.drawRadiusMarker = map => {
   });
 };
 
-// map.markerContent = (title, subtype, description) => {
-//   return `<h1>${title}</h1>
-//     <h3>${subtype}</h3>
-//     <p>${description}</p>
-//   `;
-// };
-
-maps.eventListener = (map, marker) => {
+maps.eventListener = (map, marker, index) => {
+  let mapContent = maps.locations[index];
+  let contentString = `<div class="pin-container">
+              <h2>${mapContent[0]}</h2>
+              <h3>${mapContent[4]}</h3>
+              }
+              </div>`;
+  console.log(mapContent);
   let infowindow = new google.maps.InfoWindow({
-    content: `<h1>hi!</h1>
-              <h2> I'm a sub-heading </h2>
-              <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum quis cupiditate corporis veritatis culpa nemo reiciendis numquam delectus quia aperiam, dolore beatae neque cum consequuntur maxime praesentium voluptatum dolor sed!</p>
-    `
+    content: contentString
   });
   marker.addListener("click", function() {
     infowindow.open(map, marker);
