@@ -54,7 +54,7 @@ zomatoAPI.getResults = () => {
     crossDomain: true,
     url: zomatoAPI.url,
     dataType: "json",
-    // async: true,
+    // : true,
     data: {
       q: zomatoAPI.userKeywords,
       lat: zomatoAPI.userCoordinates.lat,
@@ -134,8 +134,12 @@ firedb.setupAuth = () => {
 //MAP OBJECT
 // Create app namespace to hold all methods
 const maps = {};
-// Static locations array for google markers
 maps.locations = [];
+// Static locations array for google markers
+// maps.locations = [
+//   ["Tosto Quickfire Pizza Pasta", "43.6476250217", "-79.3966819841"],
+//   ["Maker Pizza", "43.6501420000", "-79.3978720000"]
+// ];
 maps.startLocation = {
   lat: 43.6482644,
   lng: -79.4000474
@@ -144,112 +148,63 @@ maps.startLocation = {
 // Get data from Zomato API and push into locations array
 maps.receiveMarkerData = array => {
   maps.locations.push(...array);
-
-  // console.log(maps.locations[0]);
-  // maps.displayMap();
-  maps.buildMap();
+  console.log(maps.locations);
+  maps.displayMap();
 };
 
-// maps.filterRecievedMarkerData = () => {
-//   for (let i = 0; i < maps.locations.length; i++) {
-//     const location = maps.locations[i];
-//     if (location[0] !== undefined) {
-//       console.log("bad res title");
-//     }
-//     if (location[1] !== undefined || location[2] !== undefined) {
-//       console.log("bad res title");
-//     }
-//   }
-// };
-
 // Display Google Map on screen, run a forEach method against each location in the Locations array
-// maps.displayMap = function() {
-//   let map = new google.maps.Map(document.getElementById("map"), {
-//     center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
-//     zoom: 15
-//   });
-//   map.hyMarker = new google.maps.Marker({
-//     position: { lat: 43.6482644, lng: -79.4000474 },
-//     map: map,
-//     // animation: google.maps.Animation.BOUNCE,
-//     animation: google.maps.Animation,
-//     title: "Hacker You!"
-//   });
-//   maps.drawRadiusMarker(map);
-// };
-
-maps.buildMap = () => {
+maps.displayMap = () => {
   let map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
     zoom: 15
   });
-  map.hyMarker = new google.maps.Marker({
+  maps.hyMarker = new google.maps.Marker({
     position: { lat: 43.6482644, lng: -79.4000474 },
     map: map,
     // animation: google.maps.Animation.BOUNCE,
     animation: google.maps.Animation,
     title: "Hacker You!"
   });
-  for (let i = 0; i < maps.locations.length; i++) {
-    let location = maps.locations[i];
-    let marker = new google.maps.Marker({
-      // position: { lat: parseInt(location[1]), lng: parseInt(location[2]) },
-      position: {
-        lat: location[1],
-        lng: location[2]
-      },
-      map: map,
-      title: "TEST"
-    });
-    marker.setMap(map);
-    // Add add click listener for each marker added to map
-    marker.addListener("click", function() {
-      infowindow.open(map, marker);
-    });
-    maps.eventListener(map, marker);
-  }
-  let infowindow = new google.maps.InfoWindow({
-    content: `<h1>hi!</h1>
-              <h2> I'm a sub-heading </h2>
-              <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum quis cupiditate corporis veritatis culpa nemo reiciendis numquam delectus quia aperiam, dolore beatae neque cum consequuntur maxime praesentium voluptatum dolor sed!</p>
-    `
-  });
+  maps.setMarkers(map);
 };
 
 //Create markers on Google Maps based on the Locations
 maps.setMarkers = map => {
-  // console.log(map);
-  for (let i = 0; i < maps.locations.length; i++) {
+  console.log(map);
+  // for (let i = 0; i < maps.locations.length; i++) {
+  // let location = maps.locations[i];
+  // let marker = new google.maps.Marker({
+  //   position: { lat: parseInt(location[1]), lng: parseInt(location[2]) },
+  //   map: map,
+  //   title: location[0]
+  // });
+  for (i = 0; i < maps.locations.length; i++) {
     let location = maps.locations[i];
+    let position = new google.maps.LatLng(location[1], location[2]);
     let marker = new google.maps.Marker({
-      // position: { lat: parseInt(location[1]), lng: parseInt(location[2]) },
-      position: {
-        lat: parseInt("43.6543916667"),
-        lng: parseInt("-79.4012000000")
-      },
+      position: position,
       map: map,
-      title: "TEST"
+      title: location[0]
     });
-    marker.setMap(map);
-    // Add add click listener for each marker added to map
 
+    // Add add click listener for each marker added to map
     maps.eventListener(map, marker);
   }
 };
 
-maps.drawRadiusMarker = map => {
-  let hyCircle = new google.maps.Circle({
-    strokeColor: "#D11F26",
-    strokeOpacity: 0.5,
-    strokeWeight: 2,
-    fillColor: "#D11F26",
-    fillOpacity: 0.2,
-    map: map,
-    center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
-    radius: zomatoAPI.radius
-  });
-  maps.setMarkers(map);
-};
+// maps.drawRadiusMarker = map => {
+//   let hyCircle = new google.maps.Circle({
+//     strokeColor: "#D11F26",
+//     strokeOpacity: 0.5,
+//     strokeWeight: 2,
+//     fillColor: "#D11F26",
+//     fillOpacity: 0.2,
+//     map: map,
+//     center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
+//     radius: zomatoAPI.radius
+//   });
+//   maps.setMarkers(map);
+// };
 
 // map.markerContent = (title, subtype, description) => {
 //   return `<h1>${title}</h1>
