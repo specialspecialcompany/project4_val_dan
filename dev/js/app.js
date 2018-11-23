@@ -104,7 +104,6 @@ zomatoAPI.eventListeners = () => {
     const walkSpeed = $("input:checked").val();
     console.log(breakTime, walkSpeed);
     zomatoAPI.setRadius(breakTime, walkSpeed);
-    // console.log(zomatoAPI.userKeywords);
     // Call our API and get results based on input provided by user
     zomatoAPI.getResults();
   });
@@ -161,8 +160,7 @@ maps.displayMap = () => {
   maps.hyMarker = new google.maps.Marker({
     position: { lat: 43.6482644, lng: -79.4000474 },
     map: map,
-    // animation: google.maps.Animation.BOUNCE,
-    animation: google.maps.Animation,
+    animation: google.maps.Animation.BOUNCE,
     title: "Hacker You!"
   });
   maps.setMarkers(map);
@@ -171,13 +169,6 @@ maps.displayMap = () => {
 //Create markers on Google Maps based on the Locations
 maps.setMarkers = map => {
   console.log(map);
-  // for (let i = 0; i < maps.locations.length; i++) {
-  // let location = maps.locations[i];
-  // let marker = new google.maps.Marker({
-  //   position: { lat: parseInt(location[1]), lng: parseInt(location[2]) },
-  //   map: map,
-  //   title: location[0]
-  // });
   for (i = 0; i < maps.locations.length; i++) {
     let location = maps.locations[i];
     let position = new google.maps.LatLng(location[1], location[2]);
@@ -190,22 +181,21 @@ maps.setMarkers = map => {
     // Add add click listener for each marker added to map
     maps.eventListener(map, marker);
   }
+  maps.drawRadiusMarker(map);
 };
 
-// maps.drawRadiusMarker = map => {
-//   let hyCircle = new google.maps.Circle({
-//     strokeColor: "#D11F26",
-//     strokeOpacity: 0.5,
-//     strokeWeight: 2,
-//     fillColor: "#D11F26",
-//     fillOpacity: 0.2,
-//     map: map,
-//     center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
-//     radius: zomatoAPI.radius
-//   });
-//   maps.setMarkers(map);
-// };
-
+maps.drawRadiusMarker = map => {
+  let hyCircle = new google.maps.Circle({
+    strokeColor: "#D11F26",
+    strokeOpacity: 0.5,
+    strokeWeight: 2,
+    fillColor: "#D11F26",
+    fillOpacity: 0.2,
+    map: map,
+    center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
+    radius: zomatoAPI.radius
+  });
+};
 // map.markerContent = (title, subtype, description) => {
 //   return `<h1>${title}</h1>
 //     <h3>${subtype}</h3>
@@ -225,13 +215,8 @@ maps.eventListener = (map, marker) => {
   });
 };
 
-// Start app
-maps.init = () => {
-  // maps.displayMap();
-};
-
 $(function() {
   maps.init();
   zomatoAPI.init();
-  // firedb.init();
+  firedb.init();
 });
