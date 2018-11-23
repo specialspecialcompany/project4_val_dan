@@ -104,6 +104,7 @@ zomatoAPI.eventListeners = () => {
     const walkSpeed = $("input:checked").val();
     console.log(breakTime, walkSpeed);
     zomatoAPI.setRadius(breakTime, walkSpeed);
+    // console.log(zomatoAPI.userKeywords);
     // Call our API and get results based on input provided by user
     zomatoAPI.getResults();
   });
@@ -160,7 +161,8 @@ maps.displayMap = () => {
   maps.hyMarker = new google.maps.Marker({
     position: { lat: 43.6482644, lng: -79.4000474 },
     map: map,
-    animation: google.maps.Animation.BOUNCE,
+    // animation: google.maps.Animation.BOUNCE,
+    animation: google.maps.Animation,
     title: "Hacker You!"
   });
   maps.setMarkers(map);
@@ -196,6 +198,7 @@ maps.drawRadiusMarker = map => {
     radius: zomatoAPI.radius
   });
 };
+
 // map.markerContent = (title, subtype, description) => {
 //   return `<h1>${title}</h1>
 //     <h3>${subtype}</h3>
@@ -215,8 +218,13 @@ maps.eventListener = (map, marker) => {
   });
 };
 
+// Start app
+maps.init = () => {
+  // maps.displayMap();
+};
+
 $(function() {
   maps.init();
   zomatoAPI.init();
-  firedb.init();
+  // firedb.init();
 });
