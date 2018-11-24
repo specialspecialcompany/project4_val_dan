@@ -1,3 +1,6 @@
+const app = {};
+app.markerIndicator = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
 const zomatoAPI = {};
 
 // API url
@@ -92,7 +95,6 @@ zomatoAPI.normalizeResults = () => {
         item.url
       ])
     );
-  console.log(normalizedArr);
   maps.receiveMarkerData(normalizedArr);
 };
 
@@ -113,7 +115,7 @@ const firedb = {};
 
 // Initialize Firebase
 firedb.init = () => {
-  var config = {
+  const config = {
     apiKey: "AIzaSyB49cILyim9CYlPKeIp0Mzj7Jmz05QF_Wg",
     authDomain: "testhyproject.firebaseapp.com",
     databaseURL: "https://testhyproject.firebaseio.com",
@@ -122,11 +124,41 @@ firedb.init = () => {
     messagingSenderId: "717581892962"
   };
   firebase.initializeApp(config);
+  firedb.eventListeners();
 };
 
 firedb.setupAuth = () => {
-  var provider = new firebase.auth.GoogleAuthProvider();
+  let provider = new firebase.auth.GoogleAuthProvider();
   provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+};
+
+firedb.eventListeners = () => {
+  //Register
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then(function(result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      let token = result.credential.accessToken;
+      // The signed-in user info.
+      let user = result.user;
+      // ...
+    })
+    .catch(function(error) {
+      // Handle Errors here.
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      // The email of the user's account used.
+      let email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      let credential = error.credential;
+      // ...
+    });
+
+  // $("#logout").on("click", function (e) {
+  //   e.preventDefault();
+  //   firebase.auth().signOut();
+  // });
 };
 
 //MAP OBJECT
@@ -168,18 +200,18 @@ maps.displayMap = () => {
 
 //Create markers on Google Maps based on the Locations
 maps.setMarkers = map => {
-  console.log(map);
-  for (i = 0; i < maps.locations.length; i++) {
-    let location = maps.locations[i];
+  for (index = 0; index < maps.locations.length; index++) {
+    let location = maps.locations[index];
     let position = new google.maps.LatLng(location[1], location[2]);
     let marker = new google.maps.Marker({
       position: position,
       map: map,
+      label: app.markerIndicator[index],
       title: location[0]
     });
 
     // Add add click listener for each marker added to map
-    maps.eventListener(map, marker);
+    maps.eventListener(map, marker, index);
   }
   maps.drawRadiusMarker(map);
 };
@@ -197,19 +229,19 @@ maps.drawRadiusMarker = map => {
   });
 };
 
-// map.markerContent = (title, subtype, description) => {
-//   return `<h1>${title}</h1>
-//     <h3>${subtype}</h3>
-//     <p>${description}</p>
-//   `;
-// };
-
-maps.eventListener = (map, marker) => {
+maps.eventListener = (map, marker, index) => {
+  let mapContent = maps.locations[index];
+  let contentString = `<div class="pin-container">
+              <h2>${mapContent[0]}</h2>
+              <h3 class="mapContent-subheading">${mapContent[4]}</h3>
+              <span class="mapContent-address">${mapContent[3]}</span>
+                <div className="svg-container" style="width:18px;display:block;margin-left: auto;padding-top:4px;">
+                <svg xmlns="http://www.w3.org/2000/svg" style="width:100%;" data-name="Layer 1" viewBox="0 0 100 125"><style>.a{font-weight:bold;}</style><title>  A___UP</title><path d="M36.2 64.7h-8C28.2 73.8 35.9 81.4 46 83V95h8V83.1c10.4-1.4 17.8-8.4 17.8-17.4 0-7.8-6.1-14.2-17.8-18.5V25.2c5.6 1.4 9.8 5.5 9.8 10.2h8C71.8 26.2 64.1 18.6 54 17V5H46V16.9c-10.4 1.4-17.8 8.4-17.8 17.4 0 7.8 6.1 14.2 17.8 18.5V74.8C40.4 73.5 36.2 69.4 36.2 64.7Zm27.6 1c0 5.1-4.5 8.3-9.8 9.3V55.8C58.6 57.9 63.8 61.2 63.8 65.7ZM36.2 34.3c0-4.6 4-8.2 9.8-9.3V44.2C41.4 42.1 36.2 38.8 36.2 34.3Z"/></svg>
+                </div>
+              </div>`;
+  console.log(mapContent);
   let infowindow = new google.maps.InfoWindow({
-    content: `<h1>hi!</h1>
-              <h2> I'm a sub-heading </h2>
-              <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum quis cupiditate corporis veritatis culpa nemo reiciendis numquam delectus quia aperiam, dolore beatae neque cum consequuntur maxime praesentium voluptatum dolor sed!</p>
-    `
+    content: contentString
   });
   marker.addListener("click", function() {
     infowindow.open(map, marker);
@@ -224,5 +256,5 @@ maps.init = () => {
 $(function() {
   maps.init();
   zomatoAPI.init();
-  // firedb.init();
+  firedb.init();
 });
