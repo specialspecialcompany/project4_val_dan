@@ -1,118 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,600"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dev/styles/main.css" />
+    <title>Project 4</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600" rel="stylesheet" />
-  <link rel="stylesheet" href="dev/styles/main.css" />
-  <title>Project 4</title>
-</head>
-
-<body>
-  <header>
-    <div class="wrapper">
-      <h1 class="title">Hoodfood</h1>
-      <button type="button" class="btn signin" data-target="#registerModal">
-        Sign in
-      </button>
-      <div class="register-top">
-
+  <body>
+    <header>
+      <div class="wrapper">
+        <h1 class="title">Hoodfood</h1>
+        <button type="button" class="btn signin" data-target="#registerModal">
+          Sign in
+        </button>
+        <div class="register-top"></div>
+        <form class="search-bar">
+          <div class="search-bar-top">
+            <label class="visuallyhidden" for="search"
+              >Restaurant search:</label
+            >
+            <input
+              id="search"
+              type="text"
+              placeholder="Type of food e.g. Pizza"
+            />
+            <label class="visuallyhidden" for="location">Your location:</label>
+            <input id="location" type="text" placeholder="HackerYou" />
+            <a href="#main-map" id="submit-btn" class="btn">Search</a>
+          </div>
+          <div class="search-bar-bottom">
+            <label for="slow-walk">Slow Walk</label>
+            <input
+              type="radio"
+              name="walking-speed"
+              value="3"
+              id="slow-walk"
+              checked="checked"
+            />
+            <label for="normal-walk">Normal Walk</label>
+            <input
+              type="radio"
+              name="walking-speed"
+              value="5"
+              id="normal-walk"
+            />
+            <label for="fast-walk">Fast Walk</label>
+            <input type="radio" name="walking-speed" value="7" id="fast-walk" />
+          </div>
+          <div class="search-bar-slider">
+            <input
+              type="range"
+              min="10"
+              max="60"
+              value="30"
+              step="5"
+              class="slider"
+              id="break-time"
+            />
+          </div>
+        </form>
       </div>
-      <form class="search-bar">
-        <div class="search-bar-top">
-          <label class="visuallyhidden" for="search">Restaurant search:</label>
-          <input id="search" type="text" placeholder="Type of food e.g. Pizza" />
-          <label class="visuallyhidden" for="location">Your location:</label>
-          <input id="location" type="text" placeholder="HackerYou" />
-          <a href="#main-map" id="submit-btn" class="btn">Search</a>
+    </header>
+    <main>
+      <section class="map" id="main-map">
+        <div id="map-tiles" class="map-scroll">
+          <div class="map-scroll-tile">Tile-1</div>
+          <div class="map-scroll-tile">Tile-2</div>
+          <div class="map-scroll-tile">Tile-3</div>
+          <div class="map-scroll-tile">Tile-4</div>
+          <div class="map-scroll-tile">Tile-5</div>
+          <div class="map-scroll-tile">Tile-6</div>
+          <div class="map-scroll-tile">Tile-7</div>
+          <div class="map-scroll-tile">Tile-8</div>
+          <div class="map-scroll-tile">Tile-9</div>
+          <div class="map-scroll-tile">Tile-10</div>
         </div>
-        <div class="search-bar-bottom">
-          <label for="slow-walk">Slow Walk</label>
-          <input type="radio" name="walking-speed" value="3" id="slow-walk" checked="checked" />
-          <label for="normal-walk">Normal Walk</label>
-          <input type="radio" name="walking-speed" value="5" id="normal-walk" />
-          <label for="fast-walk">Fast Walk</label>
-          <input type="radio" name="walking-speed" value="7" id="fast-walk" />
-        </div>
-        <div class="search-bar-slider">
-          <input type="range" min="10" max="60" value="30" step="5" class="slider" id="break-time" />
-        </div>
-      </form>
-    </div>
-  </header>
-  <main>
-    <section class="map" id="main-map">
-      <div id="map-tiles" class="map-scroll">
-        <div class="map-scroll-tile">Tile-1</div>
-        <div class="map-scroll-tile">Tile-2</div>
-        <div class="map-scroll-tile">Tile-3</div>
-        <div class="map-scroll-tile">Tile-4</div>
-        <div class="map-scroll-tile">Tile-5</div>
-        <div class="map-scroll-tile">Tile-6</div>
-        <div class="map-scroll-tile">Tile-7</div>
-        <div class="map-scroll-tile">Tile-8</div>
-        <div class="map-scroll-tile">Tile-9</div>
-        <div class="map-scroll-tile">Tile-10</div>
-      </div>
-      <div class="map-container">
-        <div class="" id="map"></div>
-      </div>
-    </section>
-    <section class="user-results wrapper">
-      <h2 class="user-results-title">Results</h2>
-      <div id="main-tiles" class="user-results-container">
-        <div class="user-results-tile">
-          <div class="upper-tile">
-            <img src="dev/assets/test.png" alt="" />
+        <div class="map-container"><div class="" id="map"></div></div>
+      </section>
+      <section class="user-results wrapper">
+        <h2 class="user-results-title">Results</h2>
+        <div id="main-tiles" class="user-results-container">
+          <div class="user-results-tile">
+            <div class="upper-tile">
+              <img src="dev/assets/test.png" alt="" />
+            </div>
+            <div class="lower-tile">
+              <h2 class="lower-tile-title">Title of the restaurant</h2>
+              <p class="tile-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Molestias, quibusdam?
+              </p>
+              <a href="#" class="tile-btn">See more</a>
+            </div>
           </div>
-          <div class="lower-tile">
-            <h2 class="lower-tile-title">Title of the restaurant</h2>
-            <p class="tile-description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Molestias, quibusdam?
-            </p>
-            <a href="#" class="tile-btn">See more</a>
+          <div class="user-results-tile">
+            <div class="upper-tile">
+              <img src="dev/assets/test.png" alt="" />
+            </div>
+            <div class="lower-tile">
+              <h2 class="lower-tile-title">Title of the restaurant</h2>
+              <p class="tile-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Molestias, quibusdam?
+              </p>
+              <a href="#" class="tile-btn">See more</a>
+            </div>
           </div>
-        </div>
-        <div class="user-results-tile">
-          <div class="upper-tile">
-            <img src="dev/assets/test.png" alt="" />
-          </div>
-          <div class="lower-tile">
-            <h2 class="lower-tile-title">Title of the restaurant</h2>
-            <p class="tile-description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Molestias, quibusdam?
-            </p>
-            <a href="#" class="tile-btn">See more</a>
+          <div class="user-results-tile">
+            <div class="upper-tile">
+              <img src="dev/assets/test.png" alt="" />
+            </div>
+            <div class="lower-tile">
+              <h2 class="lower-tile-title">Title of the restaurant</h2>
+              <p class="tile-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Molestias, quibusdam?
+              </p>
+              <a href="#" class="tile-btn">See more</a>
+            </div>
           </div>
         </div>
-        <div class="user-results-tile">
-          <div class="upper-tile">
-            <img src="dev/assets/test.png" alt="" />
-          </div>
-          <div class="lower-tile">
-            <h2 class="lower-tile-title">Title of the restaurant</h2>
-            <p class="tile-description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Molestias, quibusdam?
-            </p>
-            <a href="#" class="tile-btn">See more</a>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-  </main>
-
-  <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs&callback=maps.init"
-    async defer></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script src="./dev/js/app.js" async></script>
-</body>
-
+    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs&callback=maps.init"
+      async
+      defer
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script src="./dev/js/app.js" async></script>
+  </body>
 </html>

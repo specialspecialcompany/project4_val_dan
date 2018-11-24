@@ -72,7 +72,7 @@ zomatoAPI.getResults = () => {
     zomatoAPI.results = res.restaurants;
   });
   // FROM DAN: This code should be refactored as it waits to the data to be returned before running normalizeResults function
-  setTimeout(function () {
+  setTimeout(function() {
     zomatoAPI.normalizeResults();
   }, 2000);
 };
@@ -99,7 +99,7 @@ zomatoAPI.normalizeResults = () => {
 };
 
 zomatoAPI.eventListeners = () => {
-  $("#submit-btn").on("click", function () {
+  $("#submit-btn").on("click", function() {
     zomatoAPI.userKeywords = $("#search").val();
     const breakTime = $("#break-time").val();
     const walkSpeed = $("input:checked").val();
@@ -128,28 +128,32 @@ firedb.init = () => {
 };
 
 firedb.setupAuth = () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
+  let provider = new firebase.auth.GoogleAuthProvider();
   provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
 };
 
 firedb.eventListeners = () => {
   //Register
-  firebase.auth().signInWithPopup(provider).then(function (result) {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = result.credential.accessToken;
-    // The signed-in user info.
-    var user = result.user;
-    // ...
-  }).catch(function (error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // The email of the user's account used.
-    var email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
-    var credential = error.credential;
-    // ...
-  });
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then(function(result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      let token = result.credential.accessToken;
+      // The signed-in user info.
+      let user = result.user;
+      // ...
+    })
+    .catch(function(error) {
+      // Handle Errors here.
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      // The email of the user's account used.
+      let email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      let credential = error.credential;
+      // ...
+    });
 
   // $("#logout").on("click", function (e) {
   //   e.preventDefault();
@@ -239,7 +243,7 @@ maps.eventListener = (map, marker, index) => {
   let infowindow = new google.maps.InfoWindow({
     content: contentString
   });
-  marker.addListener("click", function () {
+  marker.addListener("click", function() {
     infowindow.open(map, marker);
   });
 };
@@ -249,7 +253,7 @@ maps.init = () => {
   // maps.displayMap();
 };
 
-$(function () {
+$(function() {
   maps.init();
   zomatoAPI.init();
   firedb.init();
