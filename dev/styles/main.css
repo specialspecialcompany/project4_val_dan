@@ -274,8 +274,11 @@ img {
   justify-content: center; }
 
 header {
-  background-color: #143bcf;
-  height: 100vh;
+  background: -webkit-gradient(linear, left top, right top, from(#019ba0), to(#032c9c));
+  background: -webkit-linear-gradient(left, #019ba0, #032c9c);
+  background: -o-linear-gradient(left, #019ba0, #032c9c);
+  background: linear-gradient(to right, #019ba0, #032c9c);
+  min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -284,7 +287,7 @@ header {
   align-items: center; }
   header input {
     margin: 0;
-    padding: 10px;
+    padding: 15px;
     border: none; }
     header input#search {
       width: 400px; }
@@ -293,8 +296,10 @@ header {
       border-left: 1px solid #c7c7c7; }
 
 .title {
-  font-size: 8rem;
-  padding-bottom: 50px; }
+  font-size: 9rem;
+  padding-bottom: 50px;
+  color: white;
+  letter-spacing: -4px; }
 
 .search-bar {
   display: -webkit-box;
@@ -329,7 +334,8 @@ header {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    margin-bottom: 30px; }
+    margin-bottom: 30px;
+    color: white; }
     .search-bar-bottom input {
       margin: 0 40px 0 5px; }
     .search-bar-bottom input:last-of-type {
@@ -344,7 +350,15 @@ header {
   text-decoration: none;
   padding: 10px;
   display: inline-block;
-  color: white; }
+  color: white;
+  line-height: 33px;
+  width: 150px;
+  text-align: center;
+  -webkit-transition: background-color 0.15s;
+  -o-transition: background-color 0.15s;
+  transition: background-color 0.15s; }
+  .btn:hover {
+    background-color: #2a89f7; }
 
 .map {
   display: none;
@@ -422,3 +436,34 @@ header {
       line-height: 1.3; }
     .user-results-tile .lower-tile-title {
       padding: 10px 0; }
+
+#slider .rs-range-color {
+  background-color: #33b5e5; }
+
+#slider .rs-path-color {
+  background-color: #c2e9f7; }
+
+#slider .rs-handle {
+  background-color: #c2e9f7;
+  padding: 7px;
+  border: 2px solid #c2e9f7; }
+
+#slider .rs-handle.rs-focus {
+  border-color: #33b5e5; }
+
+#slider .rs-handle:after {
+  border-color: #33b5e5;
+  background-color: #33b5e5; }
+
+#slider .rs-border {
+  border-color: transparent; }
+
+#slider .rs-bg-color {
+  background-color: transparent; }
+
+#slider .rs-tooltip-text {
+  font-family: Roboto, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  position: relative; }

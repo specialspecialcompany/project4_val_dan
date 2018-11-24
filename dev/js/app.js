@@ -37,6 +37,22 @@ app.generateMapTiles = (normalizedData) => {
   });
 }
 
+app.slider = () => {
+  $("#slider").roundSlider({
+    max: 60,
+    radius: 80,
+    startAngle: 90,
+    width: 8,
+    handleSize: "+16",
+    handleShape: "dot",
+    sliderType: "min-range",
+    value: 90
+  });
+}
+
+app.init = () => {
+  app.slider();
+}
 
 
 // ZOMATO OBJECT
@@ -268,5 +284,6 @@ maps.init = () => {
 $(function() {
   maps.init();
   zomatoAPI.init();
+  app.init();
   // firedb.init();
 });

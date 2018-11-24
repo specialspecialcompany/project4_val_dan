@@ -1,0 +1,33 @@
+#slider .rs-range-color {
+  background-color: #33b5e5;
+}
+#slider .rs-path-color {
+  background-color: #c2e9f7;
+}
+#slider .rs-handle {
+  background-color: #c2e9f7;
+  padding: 7px;
+  border: 2px solid #c2e9f7;
+}
+#slider .rs-handle.rs-focus {
+  border-color: #33b5e5;
+}
+#slider .rs-handle:after {
+  border-color: #33b5e5;
+  background-color: #33b5e5;
+}
+#slider .rs-border {
+  border-color: transparent;
+}
+
+#slider .rs-bg-color {
+  background-color: transparent;
+}
+
+#slider .rs-tooltip-text {
+  font-family: Roboto, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  position: relative;
+}
