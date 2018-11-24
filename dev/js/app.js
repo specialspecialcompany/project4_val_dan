@@ -1,6 +1,5 @@
 const app = {};
 app.markerIndicator = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-console.log(app.markerIndicator);
 
 const zomatoAPI = {};
 
@@ -73,7 +72,7 @@ zomatoAPI.getResults = () => {
     zomatoAPI.results = res.restaurants;
   });
   // FROM DAN: This code should be refactored as it waits to the data to be returned before running normalizeResults function
-  setTimeout(function() {
+  setTimeout(function () {
     zomatoAPI.normalizeResults();
   }, 2000);
 };
@@ -96,12 +95,11 @@ zomatoAPI.normalizeResults = () => {
         item.url
       ])
     );
-  console.log(normalizedArr);
   maps.receiveMarkerData(normalizedArr);
 };
 
 zomatoAPI.eventListeners = () => {
-  $("#submit-btn").on("click", function() {
+  $("#submit-btn").on("click", function () {
     zomatoAPI.userKeywords = $("#search").val();
     const breakTime = $("#break-time").val();
     const walkSpeed = $("input:checked").val();
@@ -117,7 +115,7 @@ const firedb = {};
 
 // Initialize Firebase
 firedb.init = () => {
-  var config = {
+  const config = {
     apiKey: "AIzaSyB49cILyim9CYlPKeIp0Mzj7Jmz05QF_Wg",
     authDomain: "testhyproject.firebaseapp.com",
     databaseURL: "https://testhyproject.firebaseio.com",
@@ -126,11 +124,37 @@ firedb.init = () => {
     messagingSenderId: "717581892962"
   };
   firebase.initializeApp(config);
+  firedb.eventListeners();
 };
 
 firedb.setupAuth = () => {
-  var provider = new firebase.auth.GoogleAuthProvider();
+  const provider = new firebase.auth.GoogleAuthProvider();
   provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+};
+
+firedb.eventListeners = () => {
+  //Register
+  firebase.auth().signInWithPopup(provider).then(function (result) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+    // ...
+  }).catch(function (error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    // ...
+  });
+
+  // $("#logout").on("click", function (e) {
+  //   e.preventDefault();
+  //   firebase.auth().signOut();
+  // });
 };
 
 //MAP OBJECT
@@ -172,7 +196,6 @@ maps.displayMap = () => {
 
 //Create markers on Google Maps based on the Locations
 maps.setMarkers = map => {
-  console.log(map);
   for (index = 0; index < maps.locations.length; index++) {
     let location = maps.locations[index];
     let position = new google.maps.LatLng(location[1], location[2]);
@@ -206,14 +229,17 @@ maps.eventListener = (map, marker, index) => {
   let mapContent = maps.locations[index];
   let contentString = `<div class="pin-container">
               <h2>${mapContent[0]}</h2>
-              <h3>${mapContent[4]}</h3>
-              }
+              <h3 class="mapContent-subheading">${mapContent[4]}</h3>
+              <span class="mapContent-address">${mapContent[3]}</span>
+                <div className="svg-container" style="width:18px;display:block;margin-left: auto;padding-top:4px;">
+                <svg xmlns="http://www.w3.org/2000/svg" style="width:100%;" data-name="Layer 1" viewBox="0 0 100 125"><style>.a{font-weight:bold;}</style><title>  A___UP</title><path d="M36.2 64.7h-8C28.2 73.8 35.9 81.4 46 83V95h8V83.1c10.4-1.4 17.8-8.4 17.8-17.4 0-7.8-6.1-14.2-17.8-18.5V25.2c5.6 1.4 9.8 5.5 9.8 10.2h8C71.8 26.2 64.1 18.6 54 17V5H46V16.9c-10.4 1.4-17.8 8.4-17.8 17.4 0 7.8 6.1 14.2 17.8 18.5V74.8C40.4 73.5 36.2 69.4 36.2 64.7Zm27.6 1c0 5.1-4.5 8.3-9.8 9.3V55.8C58.6 57.9 63.8 61.2 63.8 65.7ZM36.2 34.3c0-4.6 4-8.2 9.8-9.3V44.2C41.4 42.1 36.2 38.8 36.2 34.3Z"/></svg>
+                </div>
               </div>`;
   console.log(mapContent);
   let infowindow = new google.maps.InfoWindow({
     content: contentString
   });
-  marker.addListener("click", function() {
+  marker.addListener("click", function () {
     infowindow.open(map, marker);
   });
 };
@@ -223,8 +249,8 @@ maps.init = () => {
   // maps.displayMap();
 };
 
-$(function() {
+$(function () {
   maps.init();
   zomatoAPI.init();
-  // firedb.init();
+  firedb.init();
 });
