@@ -1,5 +1,61 @@
+// APP OBJECT
+
 const app = {};
 app.markerIndicator = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+// Method to generate map tiles
+
+app.generateMapTiles = (normalizedData) => {
+  $("#map-tiles").html("");
+  $("#main-tiles").html("");
+
+
+  normalizedData.forEach(element => {
+    $("#main-tiles").append(`
+    <div class="user-results-tile">
+            <div class="upper-tile">
+              <img src="${element[7]}" alt="" />
+            </div>
+            <div class="lower-tile">
+              <h2 class="lower-tile-title">${element[0]}</h2>
+              <p class="tile-description">
+                Cuisine: ${element[4]}
+              </p>
+              <a href="${element[8]}" class="tile-btn">See more</a>
+            </div>
+          </div>
+      `)
+
+    $("#map-tiles").append(`
+    <div class="map-scroll-tile">
+    <span class="map-scroll-tile-indicator">Indicator: ${app.markerIndicator[normalizedData.indexOf(element)]}</span>
+    <span class="map-scroll-tile-title">Title: ${element[0]}</span>
+    <span class="map-scroll-tile-cuisine">Cuisine: ${element[4]}</span>
+    <span class="map-scroll-tile-price">Price: ${element[5]}</span>
+  </div>`);
+
+  });
+}
+
+app.slider = () => {
+  $("#slider").roundSlider({
+    max: 60,
+    radius: 80,
+    startAngle: 90,
+    width: 8,
+    handleSize: "+16",
+    handleShape: "dot",
+    sliderType: "min-range",
+    value: 90
+  });
+}
+
+app.init = () => {
+  app.slider();
+}
+
+
+// ZOMATO OBJECT
 
 const zomatoAPI = {};
 
@@ -96,6 +152,7 @@ zomatoAPI.normalizeResults = () => {
       ])
     );
   maps.receiveMarkerData(normalizedArr);
+  app.generateMapTiles(normalizedArr);
 };
 
 zomatoAPI.eventListeners = () => {
@@ -256,5 +313,6 @@ maps.init = () => {
 $(function() {
   maps.init();
   zomatoAPI.init();
+  app.init();
   firedb.init();
 });

@@ -9,13 +9,14 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="dev/styles/main.css" />
+    <link rel="stylesheet" href="dev/styles/roundslider.min.css" />
     <title>Project 4</title>
   </head>
 
   <body>
     <header>
       <div class="wrapper">
-        <h1 class="title">Hoodfood</h1>
+        <h1 class="title">hood<em>f</em>ood</h1>
         <button type="button" class="btn signin" data-target="#registerModal">
           Sign in
         </button>
@@ -53,79 +54,18 @@
             <label for="fast-walk">Fast Walk</label>
             <input type="radio" name="walking-speed" value="7" id="fast-walk" />
           </div>
-          <div class="search-bar-slider">
-            <input
-              type="range"
-              min="10"
-              max="60"
-              value="30"
-              step="5"
-              class="slider"
-              id="break-time"
-            />
-          </div>
+          <div id="slider" class="search-bar-slider"></div>
         </form>
       </div>
     </header>
     <main>
       <section class="map" id="main-map">
-        <div id="map-tiles" class="map-scroll">
-          <div class="map-scroll-tile">Tile-1</div>
-          <div class="map-scroll-tile">Tile-2</div>
-          <div class="map-scroll-tile">Tile-3</div>
-          <div class="map-scroll-tile">Tile-4</div>
-          <div class="map-scroll-tile">Tile-5</div>
-          <div class="map-scroll-tile">Tile-6</div>
-          <div class="map-scroll-tile">Tile-7</div>
-          <div class="map-scroll-tile">Tile-8</div>
-          <div class="map-scroll-tile">Tile-9</div>
-          <div class="map-scroll-tile">Tile-10</div>
-        </div>
+        <div id="map-tiles" class="map-scroll"></div>
         <div class="map-container"><div class="" id="map"></div></div>
       </section>
       <section class="user-results wrapper">
         <h2 class="user-results-title">Results</h2>
-        <div id="main-tiles" class="user-results-container">
-          <div class="user-results-tile">
-            <div class="upper-tile">
-              <img src="dev/assets/test.png" alt="" />
-            </div>
-            <div class="lower-tile">
-              <h2 class="lower-tile-title">Title of the restaurant</h2>
-              <p class="tile-description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Molestias, quibusdam?
-              </p>
-              <a href="#" class="tile-btn">See more</a>
-            </div>
-          </div>
-          <div class="user-results-tile">
-            <div class="upper-tile">
-              <img src="dev/assets/test.png" alt="" />
-            </div>
-            <div class="lower-tile">
-              <h2 class="lower-tile-title">Title of the restaurant</h2>
-              <p class="tile-description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Molestias, quibusdam?
-              </p>
-              <a href="#" class="tile-btn">See more</a>
-            </div>
-          </div>
-          <div class="user-results-tile">
-            <div class="upper-tile">
-              <img src="dev/assets/test.png" alt="" />
-            </div>
-            <div class="lower-tile">
-              <h2 class="lower-tile-title">Title of the restaurant</h2>
-              <p class="tile-description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Molestias, quibusdam?
-              </p>
-              <a href="#" class="tile-btn">See more</a>
-            </div>
-          </div>
-        </div>
+        <div id="main-tiles" class="user-results-container"></div>
       </section>
     </main>
 
@@ -140,6 +80,7 @@
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"
     ></script>
-    <script src="./dev/js/app.js" async></script>
+    <script src="./dev/js/roundslider.min.js"></script>
+    <script src="./dev/js/app.js" async defer></script>
   </body>
 </html>
