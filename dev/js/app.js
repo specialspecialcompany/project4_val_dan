@@ -37,18 +37,24 @@ app.generateMapTiles = (normalizedData) => {
   });
 }
 
+//Create a slider and get it's value on change
 app.slider = () => {
-  $("#slider").roundSlider({
+  let slider = $("#slider").roundSlider({
     max: 60,
-    radius: 80,
+    radius: 70,
     startAngle: 90,
     width: 8,
     handleSize: "+16",
     handleShape: "dot",
     sliderType: "min-range",
-    value: 90
+    value: 15,
+    change: function (e) {
+      app.sliderValue = e;
+  }
   });
 }
+
+//App init function
 
 app.init = () => {
   app.slider();
@@ -106,6 +112,7 @@ zomatoAPI.setRadius = (walkSpeed = 5, breakTime = 60) => {
   console.log(zomatoAPI.radius);
 };
 
+
 //GET results from Zomato API
 zomatoAPI.getResults = () => {
   $.ajax({
@@ -128,9 +135,10 @@ zomatoAPI.getResults = () => {
     zomatoAPI.results = res.restaurants;
   });
   // FROM DAN: This code should be refactored as it waits to the data to be returned before running normalizeResults function
+
   setTimeout(function() {
     zomatoAPI.normalizeResults();
-  }, 2000);
+  }, 3000);
 };
 
 zomatoAPI.normalizeResults = () => {
@@ -158,7 +166,7 @@ zomatoAPI.normalizeResults = () => {
 zomatoAPI.eventListeners = () => {
   $("#submit-btn").on("click", function() {
     zomatoAPI.userKeywords = $("#search").val();
-    const breakTime = $("#break-time").val();
+   const breakTime = (app.sliderValue === undefined) ? 15 : app.sliderValue.value;
     const walkSpeed = $("input:checked").val();
     console.log(breakTime, walkSpeed);
     zomatoAPI.setRadius(breakTime, walkSpeed);
@@ -314,5 +322,5 @@ $(function() {
   maps.init();
   zomatoAPI.init();
   app.init();
-  // firedb.init();
+  firedb.init();
 });
