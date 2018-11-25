@@ -10,20 +10,22 @@ app.generateMapTiles = normalizedData => {
   $("#main-tiles").html("");
 
   normalizedData.forEach(element => {
-    $("#main-tiles").append(`
-    <div class="user-results-tile">
-            <div class="upper-tile">
-              <img src="${element[7]}" alt="" />
-            </div>
-            <div class="lower-tile">
-              <h2 class="lower-tile-title">${element[0]}</h2>
-              <p class="tile-description">
-                Cuisine: ${element[4]}
-              </p>
-              <a href="${element[8]}" class="tile-btn">See more</a>
-            </div>
-          </div>
-      `);
+    $("#main-tiles").append(`<div class="user-results-tile">
+    <div class="upper-tile">
+      <img src="${(element[7] === "") ? "dev/assets/placeholder.jpg" : element[7]}" alt="Picture of ${element[0]} place" />
+    </div>
+    <div class="lower-tile">
+      <h2 class="lower-tile-title">
+      ${element[0]}
+      </h2>
+      <p class="tile-description">${element[4]} <span class="map-scroll-tile-price-dollar">${
+        zomatoAPI.priceArr[element[5]]
+      }</span></p>
+      <p class="tile-address"><span class="bold">Address:</span> ${element[3]}</p>
+      <a href="${element[8]}" class="tile-btn">See More</a>
+    </div>
+    </div>`);
+
 
     $("#map-tiles").append(`<div class="map-scroll-tile">
     <span class="map-scroll-tile-indicator">${
