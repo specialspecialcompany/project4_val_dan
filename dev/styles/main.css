@@ -370,22 +370,48 @@ header {
   background-color: #202020;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  border-bottom: 1px solid #bbbbbb; }
   .map-scroll {
     width: 20%;
-    background-color: #d1d1d1;
+    background-color: #e9e9e9;
     overflow-y: auto;
     text-align: center; }
     .map-scroll-tile {
       padding: 50px 0;
-      border-bottom: 1px solid grey; }
+      border-bottom: 1px solid lightgray; }
       .map-scroll-tile:hover {
-        background-color: #575757; }
+        background-color: #d0d0d0; }
   .map-container {
     width: 80%; }
 
 #map {
   height: 100%; }
+
+.map-scroll-tile {
+  position: relative; }
+  .map-scroll-tile-indicator {
+    font-size: 2rem;
+    position: absolute;
+    color: white;
+    top: 15px;
+    left: 15px;
+    background-color: #2a89f7;
+    width: 40px;
+    border-radius: 10px; }
+  .map-scroll-tile-title {
+    display: block;
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin-bottom: 10px; }
+  .map-scroll-tile-cuisine {
+    margin-bottom: 10px;
+    display: block; }
+  .map-scroll-tile-price {
+    display: block; }
+    .map-scroll-tile-price-dollar {
+      font-weight: bold;
+      color: #027415; }
 
 button.signin {
   font-family: Roboto, sans-serif;
@@ -393,8 +419,8 @@ button.signin {
   cursor: pointer;
   width: 100px;
   position: absolute;
-  top: 3%;
-  right: 2%;
+  top: 2%;
+  right: 3%;
   background-color: black;
   -webkit-transition: background-color 0.1s;
   -o-transition: background-color 0.1s;

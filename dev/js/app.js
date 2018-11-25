@@ -25,16 +25,18 @@ app.generateMapTiles = normalizedData => {
           </div>
       `);
 
-    $("#map-tiles").append(`
-    <div class="map-scroll-tile">
+    $("#map-tiles").append(`<div class="map-scroll-tile">
     <span class="map-scroll-tile-indicator">${
       app.markerIndicator[normalizedData.indexOf(element)]
-    }:</span>
+    }</span>
+      </span>
     <span class="map-scroll-tile-title">${element[0]}</span>
     <span class="map-scroll-tile-cuisine">Cuisine: ${element[4]}</span>
-    <div class="map-scroll-tile-price">Price: ${
-      zomatoAPI.priceArr[element[5]]
-    }</div>
+    <span class="map-scroll-tile-price">
+      Price: <span class="map-scroll-tile-price-dollar">${
+        zomatoAPI.priceArr[element[5]]
+      }</span>
+    </span>
   </div>`);
   });
 };
