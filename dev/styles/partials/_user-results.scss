@@ -21,7 +21,7 @@
   height: 450px;
   background-color: $white;
   box-shadow: 0px 0px 50px 1px $grey;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   display: flex;
   flex-direction: column;
   .upper-tile {
@@ -34,8 +34,16 @@
     }
   }
   .lower-tile {
+    line-height: 2rem;
     height: 60%;
     padding: 15px;
+    .tile-description,
+    .tile-address {
+      margin-bottom: 10px;
+      .bold {
+        font-weight: bold;
+      }
+    }
     .tile-btn {
       text-decoration: none;
       background-color: $accent;

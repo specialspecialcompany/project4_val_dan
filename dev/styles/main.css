@@ -471,7 +471,7 @@ button.signin {
   background-color: white;
   -webkit-box-shadow: 0px 0px 50px 1px #afafaf;
   box-shadow: 0px 0px 50px 1px #afafaf;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -488,8 +488,15 @@ button.signin {
       height: 100%;
       width: 100%; }
   .user-results-tile .lower-tile {
+    line-height: 2rem;
     height: 60%;
     padding: 15px; }
+    .user-results-tile .lower-tile .tile-description,
+    .user-results-tile .lower-tile .tile-address {
+      margin-bottom: 10px; }
+      .user-results-tile .lower-tile .tile-description .bold,
+      .user-results-tile .lower-tile .tile-address .bold {
+        font-weight: bold; }
     .user-results-tile .lower-tile .tile-btn {
       text-decoration: none;
       background-color: #2a89f7;
@@ -545,7 +552,8 @@ button.signin {
 
 @media (max-width: 1100px) {
   .user-results-tile {
-    width: 45%; } }
+    width: 45%;
+    margin-bottom: 10%; } }
 
 @media (max-width: 800px) {
   .user-results-tile {
