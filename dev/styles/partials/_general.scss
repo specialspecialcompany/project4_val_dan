@@ -5,6 +5,7 @@ html {
 body {
   font-size: 1.8rem;
   font-family: "Poppins", sans-serif;
+  position: relative;
 }
 
 img {
@@ -13,6 +14,7 @@ img {
 }
 
 .wrapper {
+  display: none;
   max-width: 1600px;
   margin: 0 auto;
   width: 100%;
@@ -21,4 +23,13 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.search-bar,
+header {
+  display: none;
+}
+
+.visable {
+  display: flex;
 }

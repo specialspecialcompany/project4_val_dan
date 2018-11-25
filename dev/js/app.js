@@ -5,10 +5,9 @@ app.markerIndicator = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 // Method to generate map tiles
 
-app.generateMapTiles = (normalizedData) => {
+app.generateMapTiles = normalizedData => {
   $("#map-tiles").html("");
   $("#main-tiles").html("");
-
 
   normalizedData.forEach(element => {
     $("#main-tiles").append(`
@@ -24,18 +23,21 @@ app.generateMapTiles = (normalizedData) => {
               <a href="${element[8]}" class="tile-btn">See more</a>
             </div>
           </div>
-      `)
+      `);
 
     $("#map-tiles").append(`
     <div class="map-scroll-tile">
-    <span class="map-scroll-tile-indicator">Indicator: ${app.markerIndicator[normalizedData.indexOf(element)]}</span>
-    <span class="map-scroll-tile-title">Title: ${element[0]}</span>
+    <span class="map-scroll-tile-indicator">${
+      app.markerIndicator[normalizedData.indexOf(element)]
+    }:</span>
+    <span class="map-scroll-tile-title">${element[0]}</span>
     <span class="map-scroll-tile-cuisine">Cuisine: ${element[4]}</span>
-    <span class="map-scroll-tile-price">Price: ${element[5]}</span>
+    <div class="map-scroll-tile-price">Price: ${
+      zomatoAPI.priceArr[element[5]]
+    }</div>
   </div>`);
-
   });
-}
+};
 
 //Create a slider and get it's value on change
 app.slider = () => {
@@ -52,14 +54,39 @@ app.slider = () => {
       app.sliderValue = e;
   }
   });
-}
+};
+
+app.getFavourite = name => {
+  // Get the existing data
+  return (existing = localStorage.getItem(name));
+};
+
+app.addFavourite = (name, key, value) => {
+  /**
+   * Add an item to a localStorage() object
+   * @param {String} name  The localStorage() key
+   * @param {String} key   The localStorage() value object key
+   * @param {String} value The localStorage() value object value
+   */
+  // Get the existing data
+  let existing = localStorage.getItem(name);
+
+  // If no existing data, create an array
+  // Otherwise, convert the localStorage string to an array
+  existing = existing ? JSON.parse(existing) : {};
+
+  // Add new data to localStorage Array
+  existing[key] = value;
+
+  // Save back to localStorage
+  localStorage.setItem(name, JSON.stringify(existing));
+};
 
 //App init function
 
 app.init = () => {
   app.slider();
-}
-
+};
 
 // ZOMATO OBJECT
 
@@ -79,6 +106,9 @@ zomatoAPI.userKeywords = "";
 
 //User location
 zomatoAPI.location = "";
+
+//Price icon array
+zomatoAPI.priceArr = ["", "$", "$$", "$$$", "$$$"];
 
 //Method to change number of results to display
 zomatoAPI.changeNumberOfResults = newNumber => {
@@ -175,57 +205,6 @@ zomatoAPI.eventListeners = () => {
   });
 };
 
-// FIREBASE OBJECT
-const firedb = {};
-
-// Initialize Firebase
-firedb.init = () => {
-  const config = {
-    apiKey: "AIzaSyB49cILyim9CYlPKeIp0Mzj7Jmz05QF_Wg",
-    authDomain: "testhyproject.firebaseapp.com",
-    databaseURL: "https://testhyproject.firebaseio.com",
-    projectId: "testhyproject",
-    storageBucket: "",
-    messagingSenderId: "717581892962"
-  };
-  firebase.initializeApp(config);
-  firedb.eventListeners();
-};
-
-firedb.setupAuth = () => {
-  let provider = new firebase.auth.GoogleAuthProvider();
-  provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
-};
-
-firedb.eventListeners = () => {
-  //Register
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then(function(result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      let token = result.credential.accessToken;
-      // The signed-in user info.
-      let user = result.user;
-      // ...
-    })
-    .catch(function(error) {
-      // Handle Errors here.
-      let errorCode = error.code;
-      let errorMessage = error.message;
-      // The email of the user's account used.
-      let email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      let credential = error.credential;
-      // ...
-    });
-
-  // $("#logout").on("click", function (e) {
-  //   e.preventDefault();
-  //   firebase.auth().signOut();
-  // });
-};
-
 //MAP OBJECT
 // Create app namespace to hold all methods
 const maps = {};
@@ -249,6 +228,10 @@ maps.receiveMarkerData = array => {
 
 // Display Google Map on screen, run a forEach method against each location in the Locations array
 maps.displayMap = () => {
+  const hyContent = `<div class="pin-container">
+              <h2>HackerYou</h2>
+              <span class="mapContent-address">483 Queen St W, Toronto, ON M5V 2A9</span>
+              </div>`;
   let map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
     zoom: 15
@@ -256,9 +239,9 @@ maps.displayMap = () => {
   maps.hyMarker = new google.maps.Marker({
     position: { lat: 43.6482644, lng: -79.4000474 },
     map: map,
-    // animation: google.maps.Animation.BOUNCE,
-    animation: google.maps.Animation,
-    title: "Hacker You!"
+    animation: google.maps.Animation.BOUNCE,
+    // animation: google.maps.Animation,
+    content: hyContent
   });
   maps.setMarkers(map);
 };
@@ -296,21 +279,28 @@ maps.drawRadiusMarker = map => {
 
 maps.eventListener = (map, marker, index) => {
   let mapContent = maps.locations[index];
-  let contentString = `<div class="pin-container">
+  const contentCard = `<div class="pin-container">
               <h2>${mapContent[0]}</h2>
               <h3 class="mapContent-subheading">${mapContent[4]}</h3>
               <span class="mapContent-address">${mapContent[3]}</span>
-                <div className="svg-container" style="width:18px;display:block;margin-left: auto;padding-top:4px;">
-                <svg xmlns="http://www.w3.org/2000/svg" style="width:100%;" data-name="Layer 1" viewBox="0 0 100 125"><style>.a{font-weight:bold;}</style><title>  A___UP</title><path d="M36.2 64.7h-8C28.2 73.8 35.9 81.4 46 83V95h8V83.1c10.4-1.4 17.8-8.4 17.8-17.4 0-7.8-6.1-14.2-17.8-18.5V25.2c5.6 1.4 9.8 5.5 9.8 10.2h8C71.8 26.2 64.1 18.6 54 17V5H46V16.9c-10.4 1.4-17.8 8.4-17.8 17.4 0 7.8 6.1 14.2 17.8 18.5V74.8C40.4 73.5 36.2 69.4 36.2 64.7Zm27.6 1c0 5.1-4.5 8.3-9.8 9.3V55.8C58.6 57.9 63.8 61.2 63.8 65.7ZM36.2 34.3c0-4.6 4-8.2 9.8-9.3V44.2C41.4 42.1 36.2 38.8 36.2 34.3Z"/></svg>
-                </div>
+              <div className="mapContent-website"><a href="${
+                mapContent[8]
+              }">Website</a>
+              </div>
+              <div style="font-weight:bold; margin-top: 3px;">${
+                zomatoAPI.priceArr[mapContent[5]]
+              }</div>
+              <div style="display: flex; justify-items: flex-end;></div>
+              
               </div>`;
   console.log(mapContent);
   let infowindow = new google.maps.InfoWindow({
-    content: contentString
+    content: contentCard
   });
   marker.addListener("click", function() {
     infowindow.open(map, marker);
   });
+  console.log(index);
 };
 
 // Start app
@@ -322,5 +312,4 @@ $(function() {
   maps.init();
   zomatoAPI.init();
   app.init();
-  firedb.init();
 });

@@ -248,13 +248,15 @@ html {
 
 body {
   font-size: 1.8rem;
-  font-family: "Poppins", sans-serif; }
+  font-family: "Poppins", sans-serif;
+  position: relative; }
 
 img {
   max-width: 100%;
   display: block; }
 
 .wrapper {
+  display: none;
   max-width: 1600px;
   margin: 0 auto;
   width: 100%;
@@ -272,6 +274,15 @@ img {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center; }
+
+.search-bar,
+header {
+  display: none; }
+
+.visable {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
 
 header {
   background: -webkit-gradient(linear, left top, right top, from(#019ba0), to(#032c9c));
@@ -453,6 +464,9 @@ button.signin {
       line-height: 1.3; }
     .user-results-tile .lower-tile-title {
       padding: 10px 0; }
+
+.mapContent-website {
+  text-decoration: none; }
 
 #slider .rs-range-color {
   background-color: #cfcfcf; }
