@@ -1,11 +1,7 @@
-button.signin {
-  //   width: 30%;
+.btn.signin {
   position: fixed;
   top: 5%;
   right: 5%;
-  text-align: right;
-  display: inline-block;
-  border-radius: 5px;
+  display: inline;
   cursor: pointer;
 }
-
