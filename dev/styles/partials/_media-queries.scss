@@ -57,6 +57,15 @@
   }
 }
 
+@media (max-width: 415px) {
+  .title {
+    font-size: 6rem;
+    padding-bottom: 25px;
+  }
+  header .wrapper {
+    padding: 6% 10%;
+  }
+}
 //Map media queries
 
 @media (max-width: 750px) {
