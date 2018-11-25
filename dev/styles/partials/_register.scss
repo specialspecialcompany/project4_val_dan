@@ -1,7 +1,15 @@
-.btn.signin {
-  position: fixed;
-  top: 5%;
-  right: 5%;
-  display: inline;
+
+button.signin {
+  font-family: Roboto, sans-serif;
+  display: inline-block;
   cursor: pointer;
+  width: 100px;
+  position: absolute;
+  top: 3%;
+  right: 2%;
+  background-color: black;
+  transition: background-color 0.1s;
+  &:hover {
+    background-color: darken(rgb(42, 137, 247), 10%);
+  }
 }

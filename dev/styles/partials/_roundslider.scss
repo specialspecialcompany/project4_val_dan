@@ -1,20 +1,21 @@
 #slider .rs-range-color {
-  background-color: #33b5e5;
+  background-color: rgb(207, 207, 207);
 }
 #slider .rs-path-color {
-  background-color: #c2e9f7;
+  background-color: #fcfcfc;
 }
 #slider .rs-handle {
-  background-color: #c2e9f7;
+  background-color: #000000;
   padding: 7px;
-  border: 2px solid #c2e9f7;
+  border: 2px solid #000000;
 }
+
 #slider .rs-handle.rs-focus {
-  border-color: #33b5e5;
+  border-color: #000000;
 }
 #slider .rs-handle:after {
-  border-color: #33b5e5;
-  background-color: #33b5e5;
+  border-color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
 }
 #slider .rs-border {
   border-color: transparent;

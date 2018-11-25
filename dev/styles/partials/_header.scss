@@ -56,7 +56,10 @@ header {
   }
   &-slider {
     margin: 0 auto;
-    width: 80%;
+    &-label {
+      text-align: center;
+      padding-bottom: 5px;
+    }
   }
 }
 
@@ -70,7 +73,7 @@ header {
   line-height: 33px;
   width: 150px;
   text-align: center;
-  transition: background-color 0.15s;
+  transition: background-color 0.1s;
   &:hover {
     background-color: rgb(42, 137, 247);
   }
