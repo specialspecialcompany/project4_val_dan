@@ -50,10 +50,14 @@ app.slider = () => {
     handleShape: "dot",
     sliderType: "min-range",
     value: 15,
-    change: function (e) {
+    change: function(e) {
       app.sliderValue = e;
-  }
+    }
   });
+};
+
+app.checkForFavourite = item => {
+  console.log(item);
 };
 
 app.getFavourite = name => {
@@ -110,6 +114,9 @@ zomatoAPI.location = "";
 //Price icon array
 zomatoAPI.priceArr = ["", "$", "$$", "$$$", "$$$"];
 
+//Icons for Favourite icons, item 0 is unfilled heart, item 1 is filled in heart
+zomatoAPI.favoriateArr = ["far fa-heart", "fas fa-heart"];
+
 //Method to change number of results to display
 zomatoAPI.changeNumberOfResults = newNumber => {
   zomatoAPI.numberOfResults = newNumber;
@@ -139,9 +146,8 @@ zomatoAPI.init = () => {
 zomatoAPI.setRadius = (walkSpeed = 5, breakTime = 60) => {
   // Calculate this based on total break time multiply by walking speed.
   zomatoAPI.radius = walkSpeed * breakTime;
-  console.log(zomatoAPI.radius);
+  // console.log(zomatoAPI.radius);
 };
-
 
 //GET results from Zomato API
 zomatoAPI.getResults = () => {
@@ -196,9 +202,10 @@ zomatoAPI.normalizeResults = () => {
 zomatoAPI.eventListeners = () => {
   $("#submit-btn").on("click", function() {
     zomatoAPI.userKeywords = $("#search").val();
-   const breakTime = (app.sliderValue === undefined) ? 15 : app.sliderValue.value;
+    const breakTime =
+      app.sliderValue === undefined ? 15 : app.sliderValue.value;
     const walkSpeed = $("input:checked").val();
-    console.log(breakTime, walkSpeed);
+    // console.log(breakTime, walkSpeed);
     zomatoAPI.setRadius(breakTime, walkSpeed);
     // Call our API and get results based on input provided by user
     zomatoAPI.getResults();
@@ -279,6 +286,11 @@ maps.drawRadiusMarker = map => {
 
 maps.eventListener = (map, marker, index) => {
   let mapContent = maps.locations[index];
+  maps.locations.forEach(item => {
+    if (mapContent[4] === app.getFavourite(mapContent[4])) {
+      console.log("true");
+    }
+  });
   const contentCard = `<div class="pin-container">
               <h2>${mapContent[0]}</h2>
               <h3 class="mapContent-subheading">${mapContent[4]}</h3>
@@ -290,17 +302,17 @@ maps.eventListener = (map, marker, index) => {
               <div style="font-weight:bold; margin-top: 3px;">${
                 zomatoAPI.priceArr[mapContent[5]]
               }</div>
-              <div style="display: flex; justify-items: flex-end;></div>
+           
               
               </div>`;
-  console.log(mapContent);
+  // console.log(mapContent);
   let infowindow = new google.maps.InfoWindow({
     content: contentCard
   });
   marker.addListener("click", function() {
     infowindow.open(map, marker);
   });
-  console.log(index);
+  // console.log(index);
 };
 
 // Start app
