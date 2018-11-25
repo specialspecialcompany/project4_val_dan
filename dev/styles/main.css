@@ -256,7 +256,6 @@ img {
   display: block; }
 
 .wrapper {
-  display: none;
   max-width: 1600px;
   margin: 0 auto;
   width: 100%;
@@ -274,15 +273,6 @@ img {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center; }
-
-.search-bar,
-header {
-  display: none; }
-
-.visable {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex; }
 
 header {
   background: -webkit-gradient(linear, left top, right top, from(#019ba0), to(#032c9c));
