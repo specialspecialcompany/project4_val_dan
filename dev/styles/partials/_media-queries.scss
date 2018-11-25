@@ -55,3 +55,21 @@
     font-size: 7rem;
   }
 }
+
+//Map media queries
+
+@media (max-width: 750px) {
+  .map {
+    flex-direction: column-reverse;
+    &-scroll {
+      width: 100%;
+      height: 200px;
+      overflow-x: auto;
+      overflow-y: none;
+      &-tile {
+        border-right: 1px solid $grey;
+        min-width: 200px;
+      }
+    }
+  }
+}

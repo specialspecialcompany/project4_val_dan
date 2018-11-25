@@ -263,7 +263,7 @@ img {
   max-width: 1600px;
   margin: 0 auto;
   width: 100%;
-  padding: 5% 10%;
+  padding: 10% 10%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -290,10 +290,14 @@ header {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center; }
+  header .wrapper {
+    padding: 10% 10% 20% 10%; }
   header input {
     margin: 0;
     padding: 15px;
-    border: none; }
+    border: none;
+    border-radius: none;
+    -webkit-appearance: none; }
     header input#search {
       width: 400px; }
     header input#location {
@@ -341,15 +345,26 @@ header {
     justify-content: center;
     margin-bottom: 30px;
     color: white; }
+    .search-bar-bottom label {
+      text-align: center;
+      padding: 15px;
+      margin-right: 15px;
+      cursor: pointer; }
+      .search-bar-bottom label:nth-of-type(3) {
+        margin-right: 0; }
     .search-bar-bottom input {
-      margin: 0 40px 0 5px; }
+      margin: 0 40px 0 5px;
+      position: absolute; }
+      .search-bar-bottom input:checked + label {
+        border: 1px solid white; }
     .search-bar-bottom input:last-of-type {
       margin: 0 0 0 5px; }
   .search-bar-slider {
     margin: 0 auto; }
     .search-bar-slider-label {
       text-align: center;
-      padding-bottom: 5px; }
+      padding-top: 10px;
+      color: white; }
 
 .btn {
   background-color: #131212;
@@ -419,7 +434,7 @@ header {
 
 button.signin {
   font-family: Roboto, sans-serif;
-  display: inline-block;
+  display: none;
   cursor: pointer;
   width: 100px;
   position: absolute;
@@ -504,6 +519,9 @@ button.signin {
   background-color: #131212;
   padding: 7px;
   border: 2px solid #131212; }
+  #slider .rs-handle:hover {
+    border: 2px solid #2a89f7;
+    cursor: pointer; }
 
 #slider .rs-handle.rs-focus {
   border-color: #131212; }
@@ -519,6 +537,8 @@ button.signin {
   background-color: transparent; }
 
 #slider .rs-tooltip-text {
+  position: absolute;
+  top: 35px;
   font-family: Roboto, sans-serif;
   font-size: 2rem;
   font-weight: bold;
@@ -559,3 +579,18 @@ button.signin {
 @media (max-width: 560px) {
   .title {
     font-size: 7rem; } }
+
+@media (max-width: 750px) {
+  .map {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse; }
+    .map-scroll {
+      width: 100%;
+      height: 200px;
+      overflow-x: auto;
+      overflow-y: none; }
+      .map-scroll-tile {
+        border-right: 1px solid #afafaf;
+        min-width: 200px; } }

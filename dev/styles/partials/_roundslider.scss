@@ -8,6 +8,10 @@
   background-color: $black;
   padding: 7px;
   border: 2px solid $black;
+  &:hover {
+    border: 2px solid $accent;
+    cursor: pointer;
+  }
 }
 
 #slider .rs-handle.rs-focus {
@@ -26,6 +30,8 @@
 }
 
 #slider .rs-tooltip-text {
+  position: absolute;
+  top: 35px;
   font-family: Roboto, sans-serif;
   font-size: 2rem;
   font-weight: bold;
