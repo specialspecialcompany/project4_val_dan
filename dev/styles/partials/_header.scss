@@ -4,14 +4,11 @@ header {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  .wrapper {
-    padding: 10% 10% 20% 10%;
-  }
   input {
     margin: 0;
     padding: 15px;
     border: none;
-    border-radius: none;
+    border-radius: 0;
     -webkit-appearance: none;
     &#search {
       width: 400px;

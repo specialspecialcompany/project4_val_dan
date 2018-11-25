@@ -263,7 +263,7 @@ img {
   max-width: 1600px;
   margin: 0 auto;
   width: 100%;
-  padding: 10% 10%;
+  padding: 8% 10%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -290,13 +290,11 @@ header {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center; }
-  header .wrapper {
-    padding: 10% 10% 20% 10%; }
   header input {
     margin: 0;
     padding: 15px;
     border: none;
-    border-radius: none;
+    border-radius: 0;
     -webkit-appearance: none; }
     header input#search {
       width: 400px; }
