@@ -5,13 +5,13 @@
   background-color: #fcfcfc;
 }
 #slider .rs-handle {
-  background-color: #000000;
+  background-color: $black;
   padding: 7px;
-  border: 2px solid #000000;
+  border: 2px solid $black;
 }
 
 #slider .rs-handle.rs-focus {
-  border-color: #000000;
+  border-color: $black;
 }
 #slider .rs-handle:after {
   border-color: rgb(255, 255, 255);
@@ -29,6 +29,6 @@
   font-family: Roboto, sans-serif;
   font-size: 2rem;
   font-weight: bold;
-  color: white;
+  color: $white;
   position: relative;
 }

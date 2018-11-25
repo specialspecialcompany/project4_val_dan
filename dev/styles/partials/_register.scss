@@ -6,9 +6,9 @@ button.signin {
   position: absolute;
   top: 2%;
   right: 3%;
-  background-color: black;
+  background-color: $black;
   transition: background-color 0.1s;
   &:hover {
-    background-color: darken(rgb(42, 137, 247), 10%);
+    background-color: $accent;
   }
 }

@@ -1,0 +1,57 @@
+//Lower Tiles media queries
+
+@media (max-width: 1100px) {
+  .user-results-tile {
+    width: 45%;
+  }
+}
+
+@media (max-width: 800px) {
+  .user-results-tile {
+    width: 65%;
+  }
+
+  .user-results {
+    &-container {
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .user-results-tile {
+    width: 100%;
+  }
+}
+
+//Header Media queries
+
+@media (max-width: 800px) {
+  .search-bar {
+    &-top {
+      flex-direction: column;
+    }
+  }
+
+  header {
+    input {
+      &#search {
+        width: 100%;
+        border-bottom: 1px solid $main-bg;
+      }
+      &#location {
+        width: 100%;
+        border: none;
+      }
+    }
+    a#submit-btn.btn {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .title {
+    font-size: 7rem;
+  }
+}

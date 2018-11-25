@@ -1,11 +1,15 @@
 html {
   scroll-behavior: smooth;
+  max-width: 1600px;
+  margin: 0 auto;
+  background-color: $main-bg;
 }
 
 body {
   font-size: 1.8rem;
   font-family: "Poppins", sans-serif;
   position: relative;
+  color: $black;
 }
 
 img {
