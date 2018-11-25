@@ -4,23 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta
+      name="google-signin-client_id"
+      content="AIzaSyB49cILyim9CYlPKeIp0Mzj7Jmz05QF_Wg.apps.googleusercontent.com"
+    />
     <link
       href="https://fonts.googleapis.com/css?family=Poppins:400,600"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="dev/styles/main.css" />
     <link rel="stylesheet" href="dev/styles/roundslider.min.css" />
+
     <title>Project 4</title>
   </head>
 
   <body>
     <header>
-      <div class="wrapper">
+      <div style="display: none" class="wrapper"></div>
+      <div class="wrapper visable">
         <h1 class="title">hood<em>f</em>ood</h1>
-        <button type="button" class="btn signin" data-target="#registerModal">
-          Sign in
-        </button>
-        <div class="register-top"></div>
+        <a id="signin" class="btn signin"> Sign in </a>
+        <div class="register-top">
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        </div>
         <form class="search-bar">
           <div class="search-bar-top">
             <label class="visuallyhidden" for="search"
@@ -80,6 +86,12 @@
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"
     ></script>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+      crossorigin="anonymous"
+    />
     <script src="./dev/js/roundslider.min.js"></script>
     <script src="./dev/js/app.js" async defer></script>
   </body>
