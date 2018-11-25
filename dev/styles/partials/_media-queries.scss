@@ -63,9 +63,9 @@
     flex-direction: column-reverse;
     &-scroll {
       width: 100%;
-      height: 200px;
+      height: 160px;
       overflow-x: auto;
-      overflow-y: none;
+      display: flex;
       &-tile {
         border-right: 1px solid $grey;
         min-width: 200px;
