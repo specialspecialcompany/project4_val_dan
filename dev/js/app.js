@@ -328,11 +328,11 @@ maps.eventListener = (map, marker, index) => {
       closeWhenOthersOpen: true,
       callbacks: {
         beforeOpen: function() {},
-        afterOpen: function() {
-          var me = this;
-          console.log(me);
+        open: function() {
           $(".fa-heart").on("click", function() {
             $(this).toggleClass("fas far");
+            console.log(this);
+            app.addFavourite("favoriates", mapContent[0], mapContent[8]);
           });
         }
       }
