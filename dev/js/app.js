@@ -49,7 +49,6 @@ app.generateMapTiles = normalizedData => {
         zomatoAPI.priceArr[element[5]]
       }</span>
           <span className="favoriate-icon"><i class="far fa-heart"></i></span>
-
     </span>
   </div>`);
   });
@@ -152,7 +151,7 @@ zomatoAPI.init = () => {
 // Method to set search radius in Meters - Moved to zomatoAPI.eventListeners
 zomatoAPI.setRadius = (walkSpeed, breakTime) => {
   // Calculate this based on total break time multiply by walking speed.
-  zomatoAPI.radius = walkSpeed * breakTime;
+  zomatoAPI.radius = (walkSpeed*1000/60 * breakTime / 2) - (walkSpeed*1000/60 * 5);
   // console.log(zomatoAPI.radius);
 };
 
