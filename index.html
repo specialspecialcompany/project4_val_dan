@@ -40,7 +40,7 @@
             />
             <label class="visuallyhidden" for="location">Your location:</label>
             <input id="location" type="text" placeholder="HackerYou" />
-            <a href="#main-map" id="submit-btn" class="btn">Search</a>
+            <a href="#" id="submit-btn" class="btn">Search</a>
           </div>
           <div class="search-bar-bottom">
             <input
@@ -74,7 +74,7 @@
         </form>
       </div>
     </header>
-    <main>
+    <main class="hidden">
       <section class="map" id="main-map">
         <div id="map-tiles" class="map-scroll"></div>
         <div class="map-container"><div class="" id="map"></div></div>
@@ -84,7 +84,10 @@
         <div id="main-tiles" class="user-results-container"></div>
       </section>
     </main>
-    <footer>© 2018 Copyright SpecialSpecialCompany</footer>
+    <footer>
+      © 2018 Copyright SpecialSpecialCompany
+      <div class="preloader"></div>
+    </footer>
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

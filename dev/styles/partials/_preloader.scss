@@ -1,0 +1,82 @@
+// credit https://codepen.io/ashleynolan/pen/owvcl
+
+$itemSize: 50;
+$itemSpacing: 2;
+$squareSize: 40;
+$loaderColor: $accent;
+$loaderDelay: 100;
+$loaderDuration: 2000;
+$animationTiming: cubic-bezier(0.645, 0.045, 0.355, 1);
+
+.loader {
+  display: block;
+  overflow: hidden;
+  margin-bottom: 15%;
+  font-size: 0;
+  text-align: center;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: $main-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader--3d {
+  transform-style: preserve-3d;
+  perspective: 800px;
+}
+
+.loader-item {
+  display: inline-block;
+  width: $itemSize + px;
+  height: $itemSize + px;
+  margin-left: $itemSpacing + px;
+  background-color: $loaderColor;
+  color: $loaderColor;
+
+  animation-duration: $loaderDuration + ms;
+  animation-timing-function: $animationTiming;
+  animation-iteration-count: infinite;
+
+  //loop through to add an animation delay
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}) {
+      animation-delay: ($i * $loaderDelay) + ms;
+    }
+  }
+
+  .loader--flipDelay & {
+    animation-name: flipDelay;
+  }
+}
+
+@keyframes flipDelay {
+  0% {
+    transform: rotateX(0deg);
+    transform-origin: 0 0 0;
+    opacity: 1;
+  }
+  30% {
+    transform: rotateX(90deg);
+    transform-origin: 0 0 0;
+    opacity: 0;
+  }
+  40% {
+    transform-origin: 0 0 0;
+  }
+  60% {
+    transform: rotateX(90deg);
+    opacity: 0;
+    transform-origin: 0 100% 0;
+  }
+  90% {
+    transform: rotateX(0deg);
+    opacity: 1;
+    transform-origin: 0 100% 0;
+  }
+}

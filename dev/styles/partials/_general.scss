@@ -28,6 +28,14 @@ img {
   justify-content: center;
 }
 
-header { 
+header {
   position: relative;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
 }
