@@ -178,11 +178,28 @@ zomatoAPI.getResults = () => {
   }).then(res => {
     zomatoAPI.results = res.restaurants;
   });
-  // FROM DAN: This code should be refactored as it waits to the data to be returned before running normalizeResults function
 
-  setTimeout(function() {
+  //Append a preloader
+  $(`<div class="loader loader--flipDelay loader--3d">
+    <span class="loader-item">1</span> <span class="loader-item">2</span>
+    <span class="loader-item">3</span> <span class="loader-item">4</span>
+    <span class="loader-item">5</span> <span class="loader-item">6</span>
+    </div>`).appendTo(".preloader").hide().fadeIn(300);
+
+  //Normalize results and unhide page content
+  setTimeout(() => {
     zomatoAPI.normalizeResults();
-  }, 3000);
+    $(".hidden").toggleClass("visible");
+    $(".visible").toggleClass("hidden");
+  }, 2000);
+
+  //Scroll to the map and delete the preloader
+  setTimeout(() => {
+    $('html, body').animate({
+      'scrollTop' : $(".visible").position().top
+    });
+    $(".preloader").html("");
+    }, 2200);
 };
 
 zomatoAPI.normalizeResults = () => {
@@ -208,8 +225,11 @@ zomatoAPI.normalizeResults = () => {
 };
 
 zomatoAPI.eventListeners = () => {
+
   $("#submit-btn").on("click", function() {
     app.reset();
+    event.preventDefault();
+
     zomatoAPI.userKeywords = $("#search").val();
     const breakTime =
       app.sliderValue === undefined ? 15 : app.sliderValue.value;
@@ -254,8 +274,10 @@ maps.displayMap = () => {
     animation: google.maps.Animation.BOUNCE,
     content: hyContent
   });
+  
   maps.setMarkers(map);
 };
+
 
 //Create markers on Google Maps based on the Locations
 maps.setMarkers = map => {
