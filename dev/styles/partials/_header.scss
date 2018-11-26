@@ -8,12 +8,14 @@ header {
     margin: 0;
     padding: 15px;
     border: none;
+    border-radius: 0;
+    -webkit-appearance: none;
     &#search {
       width: 400px;
     }
     &#location {
       width: 200px;
-      border-left: 1px solid rgb(199, 199, 199);
+      border-left: 1px solid $grey;
     }
   }
 }
@@ -21,7 +23,7 @@ header {
 .title {
   font-size: 9rem;
   padding-bottom: 50px;
-  color: white;
+  color: $white;
   letter-spacing: -4px;
 }
 
@@ -38,7 +40,7 @@ header {
       font-size: 1.5rem;
     }
     input:focus {
-      border-bottom: 3px solid rgb(42, 137, 247);
+      border-bottom: 3px solid $accent;
       outline-width: 0;
     }
   }
@@ -46,9 +48,22 @@ header {
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
-    color: white;
+    color: $white;
+    label {
+      text-align: center;
+      padding: 15px;
+      margin-right: 15px;
+      cursor: pointer;
+      &:nth-of-type(3) {
+        margin-right: 0;
+      }
+    }
     input {
       margin: 0 40px 0 5px;
+      position: absolute;
+      &:checked + label {
+        border: 1px solid white;
+      }
     }
     input:last-of-type {
       margin: 0 0 0 5px;
@@ -58,14 +73,14 @@ header {
     margin: 0 auto;
     &-label {
       text-align: center;
-      padding-bottom: 5px;
-      color: white;
+      padding-top: 10px;
+      color: $white;
     }
   }
 }
 
 .btn {
-  background-color: #221f1f;
+  background-color: $black;
   border: none;
   text-decoration: none;
   padding: 10px;
@@ -76,6 +91,6 @@ header {
   text-align: center;
   transition: background-color 0.1s;
   &:hover {
-    background-color: rgb(42, 137, 247);
+    background-color: $accent;
   }
 }

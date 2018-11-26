@@ -1,3 +1,120 @@
+// APP OBJECT
+const app = {};
+app.markerIndicator = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+// Method to generate map tiles
+
+app.generateMapTiles = normalizedData => {
+  $("#map-tiles").html("");
+  $("#main-tiles").html("");
+
+  normalizedData.forEach(element => {
+    $("#main-tiles").append(`<div class="user-results-tile">
+    <div class="upper-tile">
+      <img src="${
+        element[7] === "" ? "dev/assets/placeholder.jpg" : element[7]
+      }" alt="Picture of ${element[0]} place" />
+    </div>
+    <div class="lower-tile">
+      <h2 class="lower-tile-title">
+      ${element[0]}
+      </h2>
+      <p class="tile-description">${
+        element[4]
+      } <span class="map-scroll-tile-price-dollar">${
+      zomatoAPI.priceArr[element[5]]
+    }</span></p>
+      <p class="tile-address"><span class="bold">Address:</span> ${
+        element[3]
+      }</p>
+      <a href="${element[8]}" class="tile-btn">See More</a>
+    </div>
+    </div>`);
+
+    $("#map-tiles").append(`<div class="map-scroll-tile">
+    <span class="map-scroll-tile-indicator">${
+      app.markerIndicator[normalizedData.indexOf(element)]
+    }</span>
+      </span>
+    <span class="map-scroll-tile-title">${element[0]}</span>
+    <span class="map-scroll-tile-cuisine">Cuisine: ${element[4]}</span>
+    <span class="map-scroll-tile-price">
+      Price: <span class="map-scroll-tile-price-dollar">${
+        zomatoAPI.priceArr[element[5]]
+      }</span>
+          <span className="favoriate-icon"><i class="far fa-heart"></i></span>
+
+    </span>
+  </div>`);
+  });
+};
+
+//Create a slider and get it's value on change
+app.slider = () => {
+  let slider = $("#slider").roundSlider({
+    max: 60,
+    radius: 70,
+    startAngle: 90,
+    width: 8,
+    handleSize: "+16",
+    handleShape: "dot",
+    sliderType: "min-range",
+    value: 15,
+    change: function(e) {
+      app.sliderValue = e;
+    }
+  });
+};
+
+//Icons for Favourite icons, item 0 is unfilled heart, item 1 is filled in heart
+app.favoriateIconArr = [
+  '<i class="far fa-heart"></i>',
+  '<i class="fas fa-heart"></i>'
+];
+
+app.checkForFavourite = item => {
+  console.log(item);
+};
+
+app.getFavourite = name => {
+  // Get the existing data
+  return (existing = localStorage.getItem(name));
+};
+
+app.addFavourite = (name, key, value) => {
+  /**
+   * Add an item to a localStorage() object
+   * @param {String} name  The localStorage() key
+   * @param {String} key   The localStorage() value object key
+   * @param {String} value The localStorage() value object value
+   */
+  // Get the existing data
+  let existing = localStorage.getItem(name);
+
+  // If no existing data, create an array
+  // Otherwise, convert the localStorage string to an array
+  existing = existing ? JSON.parse(existing) : {};
+
+  // Add new data to localStorage Array
+  existing[key] = value;
+
+  // Save back to localStorage
+  localStorage.setItem(name, JSON.stringify(existing));
+};
+
+app.eventListeners = function() {
+  $(".showfavoriates").on("click", function() {
+    $(".favDialog").toggleClass("showFavDialog hideFavDialog");
+  });
+};
+
+//App init function
+
+app.init = () => {
+  app.slider();
+  app.eventListeners();
+};
+
 // ZOMATO OBJECT
 
 const zomatoAPI = {};
@@ -75,7 +192,7 @@ zomatoAPI.getResults = () => {
   });
   // FROM DAN: This code should be refactored as it waits to the data to be returned before running normalizeResults function
 
-  setTimeout(function () {
+  setTimeout(function() {
     zomatoAPI.normalizeResults();
   }, 3000);
 };
@@ -103,7 +220,7 @@ zomatoAPI.normalizeResults = () => {
 };
 
 zomatoAPI.eventListeners = () => {
-  $("#submit-btn").on("click", function () {
+  $("#submit-btn").on("click", function() {
     zomatoAPI.userKeywords = $("#search").val();
     const breakTime =
       app.sliderValue === undefined ? 15 : app.sliderValue.value;
@@ -195,149 +312,39 @@ maps.eventListener = (map, marker, index) => {
     }
   });
   const contentCard = `<div class="pin-container">
-              <h2>${mapContent[0]}</h2><span class="favoriateIcon"><i class="far fa-heart"></i></span>
+              <h2>${
+                mapContent[0]
+              }</h2><span class="favoriateIcon"><i class="far fa-heart"></i></span>
               <h3 class="mapContent-subheading">${mapContent[4]}</h3>
               <span class="mapContent-address">${mapContent[3]}</span>
               <div className="mapContent-website"><a href="${
-    mapContent[8]
-    }">Website</a>
+                mapContent[8]
+              }">Website</a>
               </div>
               
               <div style="font-weight:bold; margin-top: 3px;">${
-    zomatoAPI.priceArr[mapContent[5]]
-    }</div>
+                zomatoAPI.priceArr[mapContent[5]]
+              }</div>
     </div>`;
   const infoWindow = new SnazzyInfoWindow({
     marker: marker,
     content: contentCard,
     closeWhenOthersOpen: true,
     callbacks: {
-      beforeOpen: function () {
-
-      },
-      afterOpen: function () {
+      beforeOpen: function() {},
+      afterOpen: function() {
         var me = this;
-        console.log(me)
-        $('.fa-heart').on('click', function () {
-          $(this).toggleClass('fas far')
-        })
+        console.log(me);
+        $(".fa-heart").on("click", function() {
+          $(this).toggleClass("fas far");
+        });
       }
     }
-  })
-}
-
-
-
-// APP OBJECT
-
-const app = {};
-app.markerIndicator = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-
-//Icons for Favourite icons, item 0 is unfilled heart, item 1 is filled in heart
-app.favoriateIconArr = ['<i class="far fa-heart"></i>', '<i class="fas fa-heart"></i>'];
-
-// Method to generate map tiles
-
-app.generateMapTiles = normalizedData => {
-  $("#map-tiles").html("");
-  $("#main-tiles").html("");
-
-  normalizedData.forEach(element => {
-    $("#main-tiles").append(`
-    <div class="user-results-tile">
-            <div class="upper-tile">
-              <img src="${element[7]}" alt="" />
-            </div>
-            <div class="lower-tile">
-              <h2 class="lower-tile-title">${element[0]}</h2>
-              <p class="tile-description">
-                Cuisine: ${element[4]}
-              </p>
-              <a href="${element[8]}" class="tile-btn">See more</a>
-            </div>
-          </div>
-      `);
-
-    $("#map-tiles").append(`<div class="map-scroll-tile">
-    <span class="map-scroll-tile-indicator">${
-      app.markerIndicator[normalizedData.indexOf(element)]
-      }</span>
-      </span>
-    <span class="map-scroll-tile-title">${element[0]}</span>
-    <span class="map-scroll-tile-cuisine">Cuisine: ${element[4]}</span>
-    <span class="map-scroll-tile-price">
-      Price: <span class="map-scroll-tile-price-dollar">${
-      zomatoAPI.priceArr[element[5]]
-      }</span>
-    </span>
-    <span className="favoriate-icon"><i class="far fa-heart"></i></span>
-    
-  </div>`);
   });
 };
 
-app.eventListeners = function () {
-  $('.showfavoriates').on('click', function () {
-    $('.favDialog').toggleClass('showFavDialog hideFavDialog')
-  })
-
-}
-
-//Create a slider and get it's value on change
-app.slider = () => {
-  let slider = $("#slider").roundSlider({
-    max: 60,
-    radius: 70,
-    startAngle: 90,
-    width: 8,
-    handleSize: "+16",
-    handleShape: "dot",
-    sliderType: "min-range",
-    value: 15,
-    change: function (e) {
-      app.sliderValue = e;
-    }
-  });
-};
-
-app.checkForFavorite = item => {
-  console.log(item);
-};
-
-app.getFavorite = name => {
-  // Get the existing data
-  return (existing = localStorage.getItem(name));
-};
-
-app.addFavorite = (name, key, value) => {
-  /**
-   * Add an item to a localStorage() object
-   * @param {String} name  The localStorage() key
-   * @param {String} key   The localStorage() value object key
-   * @param {String} value The localStorage() value object value
-   */
-  // Get the existing data
-  let existing = localStorage.getItem(name);
-
-  // If no existing data, create an array
-  // Otherwise, convert the localStorage string to an array
-  existing = existing ? JSON.parse(existing) : {};
-
-  // Add new data to localStorage Array
-  existing[key] = value;
-
-  // Save back to localStorage
-  localStorage.setItem(name, JSON.stringify(existing));
-};
-
-//App init function
-
-app.init = () => {
-  app.slider();
-  app.eventListeners();
-};
-
-$(function () {
+// Document Ready
+$(function() {
   zomatoAPI.init();
   app.init();
 });
