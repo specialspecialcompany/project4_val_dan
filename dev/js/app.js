@@ -4,6 +4,12 @@ app.markerIndicator = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 // Method to generate map tiles
 
+app.reset = () => {
+  $("#map-tiles").empty();
+  $("#map").empty();
+  maps.locations = [];
+};
+
 app.generateMapTiles = normalizedData => {
   $("#map-tiles").html("");
   $("#main-tiles").html("");
@@ -67,46 +73,28 @@ app.slider = () => {
 };
 
 //Icons for Favourite icons, item 0 is unfilled heart, item 1 is filled in heart
-app.favoriateIconArr = [
-  '<i class="far fa-heart"></i>',
-  '<i class="fas fa-heart"></i>'
-];
+// app.favoriateIconArr = [
+//   '<i class="far fa-heart"></i>',
+//   '<i class="fas fa-heart"></i>'
+// ];
 
-app.checkForFavourite = item => {
-  console.log(item);
-};
+// app.getFavorite = key => {
+//   return (localData = JSON.parse(window.localStorage.getItem(key)));
+// };
 
-app.getFavourite = name => {
-  // Get the existing data
-  return (existing = localStorage.getItem(name));
-};
+// app.createFavCard = () => {
+//   $(".favDialog");
+// };
 
-app.addFavourite = (name, key, value) => {
-  /**
-   * Add an item to a localStorage() object
-   * @param {String} name  The localStorage() key
-   * @param {String} key   The localStorage() value object key
-   * @param {String} value The localStorage() value object value
-   */
-  // Get the existing data
-  let existing = localStorage.getItem(name);
-
-  // If no existing data, create an array
-  // Otherwise, convert the localStorage string to an array
-  existing = existing ? JSON.parse(existing) : {};
-
-  // Add new data to localStorage Array
-  existing[key] = value;
-
-  // Save back to localStorage
-  localStorage.setItem(name, JSON.stringify(existing));
-};
-
-app.eventListeners = function() {
-  $(".showfavoriates").on("click", function() {
-    $(".favDialog").toggleClass("showFavDialog hideFavDialog");
-  });
-};
+// app.eventListeners = function() {
+//   $(".showfavoriates").on("click", function() {
+//     $(".favDialog").toggleClass("showFavDialog hideFavDialog");
+//     for (let i = 0; i < localStorage.length; i++) {
+//       let item = app.getFavorite();
+//       console.log(item);
+//     }
+//   });
+// };
 
 //App init function
 
@@ -221,6 +209,7 @@ zomatoAPI.normalizeResults = () => {
 
 zomatoAPI.eventListeners = () => {
   $("#submit-btn").on("click", function() {
+    app.reset();
     zomatoAPI.userKeywords = $("#search").val();
     const breakTime =
       app.sliderValue === undefined ? 15 : app.sliderValue.value;
@@ -236,11 +225,7 @@ zomatoAPI.eventListeners = () => {
 // Create app namespace to hold all methods
 const maps = {};
 maps.locations = [];
-// Static locations array for google markers
-// maps.locations = [
-//   ["Tosto Quickfire Pizza Pasta", "43.6476250217", "-79.3966819841"],
-//   ["Maker Pizza", "43.6501420000", "-79.3978720000"]
-// ];
+// Locations array for google markers
 maps.startLocation = {
   lat: 43.6482644,
   lng: -79.4000474
@@ -249,7 +234,6 @@ maps.startLocation = {
 // Get data from Zomato API and push into locations array
 maps.receiveMarkerData = array => {
   maps.locations.push(...array);
-  console.log(maps.locations);
   maps.displayMap();
 };
 
@@ -259,15 +243,15 @@ maps.displayMap = () => {
               <h2>HackerYou</h2>
               <span class="mapContent-address">483 Queen St W, Toronto, ON M5V 2A9</span>
               </div>`;
-  let map = new google.maps.Map(document.getElementById("map"), {
+  let map = null;
+  map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: maps.startLocation.lat, lng: maps.startLocation.lng },
     zoom: 15
   });
-  maps.hyMarker = new google.maps.Marker({
+  const hyMarker = new google.maps.Marker({
     position: { lat: 43.6482644, lng: -79.4000474 },
     map: map,
     animation: google.maps.Animation.BOUNCE,
-    // animation: google.maps.Animation,
     content: hyContent
   });
   maps.setMarkers(map);
@@ -328,9 +312,7 @@ maps.eventListener = (map, marker, index) => {
       closeWhenOthersOpen: true,
       callbacks: {
         beforeOpen: function() {},
-        afterOpen: function() {
-          var me = this;
-          console.log(me);
+        open: function() {
           $(".fa-heart").on("click", function() {
             $(this).toggleClass("fas far");
           });
