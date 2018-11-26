@@ -17,7 +17,8 @@ button.showfavoriates {
 
 .favDialog {
   position: absolute;
-  background: #221f1f;
+  background: $black;
+  height: 250px;
   width: 100%;
   z-index: 10;
 }
@@ -33,6 +34,6 @@ button.showfavoriates {
 }
 
 .hideFavDialog {
-  top: -1000px;
+  top: -500px;
   position: absolute;
 }
