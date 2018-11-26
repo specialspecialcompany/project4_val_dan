@@ -307,11 +307,7 @@ maps.drawRadiusMarker = map => {
 maps.eventListener = (map, marker, index) => {
   let mapContent = maps.locations[index];
   maps.locations.forEach(item => {
-    if (mapContent[4] === app.getFavorite(mapContent[4])) {
-      console.log("true");
-    }
-  });
-  const contentCard = `<div class="pin-container">
+    const contentCard = `<div class="pin-container">
               <h2>${
                 mapContent[0]
               }</h2><span class="favoriateIcon"><i class="far fa-heart"></i></span>
@@ -326,20 +322,21 @@ maps.eventListener = (map, marker, index) => {
                 zomatoAPI.priceArr[mapContent[5]]
               }</div>
     </div>`;
-  const infoWindow = new SnazzyInfoWindow({
-    marker: marker,
-    content: contentCard,
-    closeWhenOthersOpen: true,
-    callbacks: {
-      beforeOpen: function() {},
-      afterOpen: function() {
-        var me = this;
-        console.log(me);
-        $(".fa-heart").on("click", function() {
-          $(this).toggleClass("fas far");
-        });
+    const infoWindow = new SnazzyInfoWindow({
+      marker: marker,
+      content: contentCard,
+      closeWhenOthersOpen: true,
+      callbacks: {
+        beforeOpen: function() {},
+        afterOpen: function() {
+          var me = this;
+          console.log(me);
+          $(".fa-heart").on("click", function() {
+            $(this).toggleClass("fas far");
+          });
+        }
       }
-    }
+    });
   });
 };
 

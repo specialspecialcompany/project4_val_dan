@@ -8,14 +8,20 @@
       href="https://fonts.googleapis.com/css?family=Poppins:400,600"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="dev/styles/snazzy-info-window.min.css" />
     <link rel="stylesheet" href="dev/styles/roundslider.min.css" />
     <link rel="stylesheet" href="dev/styles/main.css" />
     <title>hoodfood</title>
   </head>
-
   <body>
     <header>
+      <div class="favDialog hideFavDialog"></div>
       <div class="wrapper clearfix">
         <button type="button" class="btn showfavoriates">
           Show Favoriates
@@ -40,28 +46,28 @@
             <input
               type="radio"
               name="walking-speed"
-              value="3"
+              value="7"
               id="slow-walk"
-              checked="checked"
               class="visuallyhidden"
             />
-            <label for="slow-walk">Slow Walk</label>
+            <label for="slow-walk">Slow Walker</label>
             <input
               type="radio"
               name="walking-speed"
-              value="5"
+              value="9"
               id="normal-walk"
               class="visuallyhidden"
+              checked="checked"
             />
-            <label for="normal-walk">Normal Walk</label>
+            <label for="normal-walk">Normal Walker</label>
             <input
               type="radio"
               name="walking-speed"
-              value="7"
+              value="12.5"
               id="fast-walk"
               class="visuallyhidden"
             />
-            <label for="fast-walk">Fast Walk</label>
+            <label for="fast-walk">Fast Walker</label>
           </div>
           <div id="slider" class="search-bar-slider"></div>
           <span class="search-bar-slider-label">Break time (min)</span>
@@ -79,25 +85,13 @@
       </section>
     </main>
     <footer>© 2018 Copyright SpecialSpecialCompany</footer>
-
-    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs&callback=maps.init"
-      async
-      defer
-    ></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"
     ></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0FxLlOyFzx58M8oGoi2Aw232l2shTAbs"></script>
     <script src="./dev/js/snazzy-info-window.min.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"
-    ></script>
     <script src="./dev/js/roundslider.min.js"></script>
     <script src="./dev/js/app.js" async defer></script>
   </body>
