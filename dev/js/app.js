@@ -1,5 +1,4 @@
 // APP OBJECT
-
 const app = {};
 app.markerIndicator = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -12,20 +11,25 @@ app.generateMapTiles = normalizedData => {
   normalizedData.forEach(element => {
     $("#main-tiles").append(`<div class="user-results-tile">
     <div class="upper-tile">
-      <img src="${(element[7] === "") ? "dev/assets/placeholder.jpg" : element[7]}" alt="Picture of ${element[0]} place" />
+      <img src="${
+        element[7] === "" ? "dev/assets/placeholder.jpg" : element[7]
+      }" alt="Picture of ${element[0]} place" />
     </div>
     <div class="lower-tile">
       <h2 class="lower-tile-title">
       ${element[0]}
       </h2>
-      <p class="tile-description">${element[4]} <span class="map-scroll-tile-price-dollar">${
-        zomatoAPI.priceArr[element[5]]
-      }</span></p>
-      <p class="tile-address"><span class="bold">Address:</span> ${element[3]}</p>
+      <p class="tile-description">${
+        element[4]
+      } <span class="map-scroll-tile-price-dollar">${
+      zomatoAPI.priceArr[element[5]]
+    }</span></p>
+      <p class="tile-address"><span class="bold">Address:</span> ${
+        element[3]
+      }</p>
       <a href="${element[8]}" class="tile-btn">See More</a>
     </div>
     </div>`);
-
 
     $("#map-tiles").append(`<div class="map-scroll-tile">
     <span class="map-scroll-tile-indicator">${
@@ -38,6 +42,8 @@ app.generateMapTiles = normalizedData => {
       Price: <span class="map-scroll-tile-price-dollar">${
         zomatoAPI.priceArr[element[5]]
       }</span>
+          <span className="favoriate-icon"><i class="far fa-heart"></i></span>
+
     </span>
   </div>`);
   });
@@ -59,6 +65,12 @@ app.slider = () => {
     }
   });
 };
+
+//Icons for Favourite icons, item 0 is unfilled heart, item 1 is filled in heart
+app.favoriateIconArr = [
+  '<i class="far fa-heart"></i>',
+  '<i class="fas fa-heart"></i>'
+];
 
 app.checkForFavourite = item => {
   console.log(item);
@@ -90,10 +102,17 @@ app.addFavourite = (name, key, value) => {
   localStorage.setItem(name, JSON.stringify(existing));
 };
 
+app.eventListeners = function() {
+  $(".showfavoriates").on("click", function() {
+    $(".favDialog").toggleClass("showFavDialog hideFavDialog");
+  });
+};
+
 //App init function
 
 app.init = () => {
   app.slider();
+  app.eventListeners();
 };
 
 // ZOMATO OBJECT
@@ -118,9 +137,6 @@ zomatoAPI.location = "";
 //Price icon array
 zomatoAPI.priceArr = ["", "$", "$$", "$$$", "$$$"];
 
-//Icons for Favourite icons, item 0 is unfilled heart, item 1 is filled in heart
-zomatoAPI.favoriateArr = ["far fa-heart", "fas fa-heart"];
-
 //Method to change number of results to display
 zomatoAPI.changeNumberOfResults = newNumber => {
   zomatoAPI.numberOfResults = newNumber;
@@ -139,7 +155,7 @@ zomatoAPI.setCoordinates = (lat, lon) => {
 };
 
 //Search radius default value in Meters
-zomatoAPI.radius = 10;
+// zomatoAPI.radius = 10;
 
 // Set up a init function so we can add additional functions in the future.
 zomatoAPI.init = () => {
@@ -147,7 +163,7 @@ zomatoAPI.init = () => {
 };
 
 // Method to set search radius in Meters - Moved to zomatoAPI.eventListeners
-zomatoAPI.setRadius = (walkSpeed = 5, breakTime = 60) => {
+zomatoAPI.setRadius = (walkSpeed, breakTime) => {
   // Calculate this based on total break time multiply by walking speed.
   zomatoAPI.radius = walkSpeed * breakTime;
   // console.log(zomatoAPI.radius);
@@ -291,41 +307,44 @@ maps.drawRadiusMarker = map => {
 maps.eventListener = (map, marker, index) => {
   let mapContent = maps.locations[index];
   maps.locations.forEach(item => {
-    if (mapContent[4] === app.getFavourite(mapContent[4])) {
+    if (mapContent[4] === app.getFavorite(mapContent[4])) {
       console.log("true");
     }
   });
   const contentCard = `<div class="pin-container">
-              <h2>${mapContent[0]}</h2>
+              <h2>${
+                mapContent[0]
+              }</h2><span class="favoriateIcon"><i class="far fa-heart"></i></span>
               <h3 class="mapContent-subheading">${mapContent[4]}</h3>
               <span class="mapContent-address">${mapContent[3]}</span>
               <div className="mapContent-website"><a href="${
                 mapContent[8]
               }">Website</a>
               </div>
+              
               <div style="font-weight:bold; margin-top: 3px;">${
                 zomatoAPI.priceArr[mapContent[5]]
               }</div>
-           
-              
-              </div>`;
-  // console.log(mapContent);
-  let infowindow = new google.maps.InfoWindow({
-    content: contentCard
+    </div>`;
+  const infoWindow = new SnazzyInfoWindow({
+    marker: marker,
+    content: contentCard,
+    closeWhenOthersOpen: true,
+    callbacks: {
+      beforeOpen: function() {},
+      afterOpen: function() {
+        var me = this;
+        console.log(me);
+        $(".fa-heart").on("click", function() {
+          $(this).toggleClass("fas far");
+        });
+      }
+    }
   });
-  marker.addListener("click", function() {
-    infowindow.open(map, marker);
-  });
-  // console.log(index);
 };
 
-// Start app
-maps.init = () => {
-  // maps.displayMap();
-};
-
+// Document Ready
 $(function() {
-  maps.init();
   zomatoAPI.init();
   app.init();
 });

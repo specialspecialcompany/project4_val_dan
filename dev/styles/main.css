@@ -279,6 +279,9 @@ img {
   justify-content: center; }
 
 header {
+  position: relative; }
+
+header {
   background: -webkit-gradient(linear, left top, right top, from(#019ba0), to(#032c9c));
   background: -webkit-linear-gradient(left, #019ba0, #032c9c);
   background: -o-linear-gradient(left, #019ba0, #032c9c);
@@ -430,20 +433,42 @@ header {
       font-weight: bold;
       color: #027415; }
 
-button.signin {
+.fa-heart {
+  color: #2a89f7;
+  font-size: 2rem; }
+
+button.showfavoriates {
   font-family: Roboto, sans-serif;
-  display: none;
+  display: inline-block;
   cursor: pointer;
-  width: 100px;
+  width: 175px;
   position: absolute;
   top: 2%;
   right: 3%;
-  background-color: #131212;
+  background-color: #221f1f;
   -webkit-transition: background-color 0.1s;
   -o-transition: background-color 0.1s;
   transition: background-color 0.1s; }
-  button.signin:hover {
-    background-color: #2a89f7; }
+  button.showfavoriates:hover {
+    background-color: #096fe5; }
+
+.favDialog {
+  position: absolute;
+  background: #221f1f;
+  width: 100%;
+  z-index: 10; }
+
+.showFavDialog {
+  height: 250px;
+  top: 0; }
+
+.showFavDialog + .wrapper {
+  position: absolute;
+  top: 250px; }
+
+.hideFavDialog {
+  top: -1000px;
+  position: absolute; }
 
 .user-results {
   background-color: #e9e9e9; }

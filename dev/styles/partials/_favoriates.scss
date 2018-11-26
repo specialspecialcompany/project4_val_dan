@@ -1,0 +1,38 @@
+$favoriateHeight: 250px;
+
+button.showfavoriates {
+  font-family: Roboto, sans-serif;
+  display: inline-block;
+  cursor: pointer;
+  width: 175px;
+  position: absolute;
+  top: 2%;
+  right: 3%;
+  background-color: #221f1f;
+  transition: background-color 0.1s;
+  &:hover {
+    background-color: darken(rgb(42, 137, 247), 10%);
+  }
+}
+
+.favDialog {
+  position: absolute;
+  background: #221f1f;
+  width: 100%;
+  z-index: 10;
+}
+
+.showFavDialog {
+  height: 250px;
+  top: 0;
+}
+
+.showFavDialog + .wrapper {
+  position: absolute;
+  top: 250px;
+}
+
+.hideFavDialog {
+  top: -1000px;
+  position: absolute;
+}
