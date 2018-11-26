@@ -100,7 +100,6 @@ app.slider = () => {
 
 app.init = () => {
   app.slider();
-  app.eventListeners();
 };
 
 // ZOMATO OBJECT
@@ -184,7 +183,10 @@ zomatoAPI.getResults = () => {
     <span class="loader-item">1</span> <span class="loader-item">2</span>
     <span class="loader-item">3</span> <span class="loader-item">4</span>
     <span class="loader-item">5</span> <span class="loader-item">6</span>
-    </div>`).appendTo(".preloader").hide().fadeIn(300);
+    </div>`)
+    .appendTo(".preloader")
+    .hide()
+    .fadeIn(300);
 
   //Normalize results and unhide page content
   setTimeout(() => {
@@ -195,11 +197,11 @@ zomatoAPI.getResults = () => {
 
   //Scroll to the map and delete the preloader
   setTimeout(() => {
-    $('html, body').animate({
-      'scrollTop' : $(".visible").position().top
+    $("html, body").animate({
+      scrollTop: $(".visible").position().top
     });
     $(".preloader").html("");
-    }, 2200);
+  }, 2200);
 };
 
 zomatoAPI.normalizeResults = () => {
@@ -225,11 +227,8 @@ zomatoAPI.normalizeResults = () => {
 };
 
 zomatoAPI.eventListeners = () => {
-
   $("#submit-btn").on("click", function() {
     app.reset();
-    event.preventDefault();
-
     zomatoAPI.userKeywords = $("#search").val();
     const breakTime =
       app.sliderValue === undefined ? 15 : app.sliderValue.value;
@@ -274,10 +273,9 @@ maps.displayMap = () => {
     animation: google.maps.Animation.BOUNCE,
     content: hyContent
   });
-  
+
   maps.setMarkers(map);
 };
-
 
 //Create markers on Google Maps based on the Locations
 maps.setMarkers = map => {
